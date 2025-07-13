@@ -1,0 +1,21 @@
+
+sequenceDiagram
+    participant SF as SpaceFractions
+    participant G as Game
+    participant A as Admin
+    participant Q as Questions
+    participant FO as FractionOperations
+    participant F as Feedback
+    participant QM as QuestionManager
+    SF->>G: play()
+    G->>FO: addFractions(fractions)
+    FO-->>G: return result
+    G->>F: provideFeedback(score)
+    F-->>G: return feedback
+    SF->>A: updateQuestions()
+    A->>QM: updateQuestion(question)
+    QM-->>A: return result
+    A->>Q: getQuestions()
+    Q-->>A: return questions
+    SF->>Q: getQuestions()
+    Q-->>SF: return questions
