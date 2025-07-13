@@ -17,16 +17,16 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 ## 📁 Repository Structure
 
 ```plaintext
-├── scripts           # Source code of the MAAD framework
-├── MAAD artifacts    # Generated artifacts of the MAAD framework
-│ ├── GPT-4o          # Artifacts from GPT-4o
-│ │ ├── GPT-4o_RAG    # Artifacts using Retrieval-Augmented Generation (RAG)
-│ │ └── GPT-4o_noRAG  # Artifacts without using RAG
-│ ├── Deepseek-R1     # Artifacts from Deepseek-R1
-│ │ ├── DeepSeek-R1_noRAG
-│ │ └── DeepSeek_RAG
-│ └── Llama3.3        # Artifacts from Llama3.3
+├── scripts               # Source code of the MAAD framework
+├── MAAD artifacts        # Generated artifacts of the MAAD framework
+│ ├── GPT-4o              # Generations of MAAD equipped with GPT-4o
+│ │ ├── GPT-4o_RAG        # Generations of MAAD equipped with GPT-4o (using RAG)
+│ │ └── GPT-4o_noRAG      # Generations of MAAD equipped with GPT-4o (without using RAG)
+│ ├── Deepseek-R1         # Generations of MAAD equipped with Deepseek-R1
+│ │ ├── DeepSeek-R1_RAG
+│ │ └── DeepSeek-R1_noRAG
+│ └── Llama3.3            # Generations of MAAD equipped with Llama3.3
 │ ├── Llama3.3_RAG
 │ └── Llama3.3-noRAG
-├── MetaGPT           # MetaGPT-generated results for comparison with MAAD
+├── MetaGPT               # Comparative results from MetaGPT
 └── README.md
