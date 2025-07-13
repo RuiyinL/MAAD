@@ -1,0 +1,47 @@
+
+classDiagram
+    class SpaceFractions {
+        -Game game
+        -Admin admin
+        -Questions questions
+        +init() str
+    }
+    class Game {
+        -FractionOperations fraction_operations
+        -Feedback feedback
+        +play() str
+    }
+    class Admin {
+        -QuestionManager question_manager
+        +updateQuestions() str
+    }
+    class Questions {
+        -Question question
+        +getQuestions() list
+    }
+    class FractionOperations {
+        +addFractions(fractions: list) str
+        +subtractFractions(fractions: list) str
+        +multiplyFractions(fractions: list) str
+        +divideFractions(fractions: list) str
+    }
+    class Feedback {
+        +provideFeedback(score: int) str
+    }
+    class QuestionManager {
+        +updateQuestion(question: str) str
+        +deleteQuestion(question: str) str
+    }
+    class Question {
+        -text: str
+        -answer: str
+        +getText() str
+        +getAnswer() str
+    }
+    SpaceFractions --> Game
+    SpaceFractions --> Admin
+    SpaceFractions --> Questions
+    Game --> FractionOperations
+    Game --> Feedback
+    Admin --> QuestionManager
+    Questions --> Question
