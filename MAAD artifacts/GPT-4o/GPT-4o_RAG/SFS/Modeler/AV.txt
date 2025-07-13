@@ -1,0 +1,478 @@
+To create the logical view using PlantUML syntax, we will generate three diagrams: a class diagram, an object diagram, and a state diagram. These diagrams will represent the architecture of the Space Fractions system based on the provided requirements.
+
+### Logical View:
+
+#### 1. Class Diagram
+The class diagram will define the main classes, their attributes, methods, and relationships.
+
+```plantuml
+@startuml
+class UserInterface {
+  +displayMainMenu()
+  +displayIntroMovie()
+  +navigateOptions()
+}
+
+class ScoringEngine {
+  +calculateScore()
+  +displayScore()
+}
+
+class QuestionManagementSystem {
+  +updateQuestions()
+  +validateQuestions()
+}
+
+class StorylineEngine {
+  +generateStoryline()
+  +adaptStoryline()
+}
+
+class WebBrowserInterface {
+  +checkFlashSupport()
+}
+
+class AdministrativeInterface {
+  +editQuestions()
+  +saveQuestions()
+}
+
+UserInterface --> ScoringEngine : uses
+UserInterface --> StorylineEngine : uses
+UserInterface --> WebBrowserInterface : interacts with
+AdministrativeInterface --> QuestionManagementSystem : manages
+QuestionManagementSystem --> UserInterface : updates
+@enduml
+```
+
+#### 2. Object Diagram
+The object diagram will show instances of the classes and their relationships in a specific scenario.
+
+```plantuml
+@startuml
+object ui {
+  displayMainMenu()
+  displayIntroMovie()
+}
+
+object se {
+  calculateScore()
+  displayScore()
+}
+
+object qms {
+  updateQuestions()
+  validateQuestions()
+}
+
+object ste {
+  generateStoryline()
+  adaptStoryline()
+}
+
+object wbi {
+  checkFlashSupport()
+}
+
+object ai {
+  editQuestions()
+  saveQuestions()
+}
+
+ui -- se : uses
+ui -- ste : uses
+ui -- wbi : interacts with
+ai -- qms : manages
+qms -- ui : updates
+@enduml
+```
+
+#### 3. State Diagram
+The state diagram will represent the different states of the UserInterface object and the transitions between these states.
+
+```plantuml
+@startuml
+[*] --> MainMenu : start
+MainMenu --> IntroMovie : select "Start Game"
+IntroMovie --> GamePlay : movie ends
+GamePlay --> Scoring : game ends
+Scoring --> MainMenu : select "Retry" or "Exit"
+MainMenu --> HelpSection : select "Help"
+HelpSection --> MainMenu : back to menu
+@enduml
+```
+
+These diagrams provide a clear and informative representation of the Space Fractions system's architecture, focusing on the logical view. The class diagram outlines the system's structure, the object diagram shows a specific scenario, and the state diagram illustrates the lifecycle of the UserInterface object.Development View:
+
+1. Package Diagram
+```plantuml
+@startuml
+package "Space Fractions System" {
+    package "User Interface" {
+        [Main Menu]
+        [Introductory Movie]
+        [Help Section]
+        [Navigation]
+    }
+
+    package "Core System" {
+        [Scoring Engine]
+        [Storyline Engine]
+        [Question Management System]
+    }
+
+    package "Web Browser Interface" {
+        [Flash Support]
+        [Browser Compatibility]
+    }
+
+    package "Administrative Interface" {
+        [Question Editor]
+        [Real-time Updates]
+    }
+
+    package "Network Infrastructure" {
+        [Web Server]
+        [Network Configuration]
+    }
+
+    package "Testing Framework" {
+        [Quality Assurance Tools]
+    }
+
+    [User Interface] --> [Core System]
+    [Core System] --> [Web Browser Interface]
+    [Administrative Interface] --> [Core System]
+    [Network Infrastructure] --> [Web Browser Interface]
+    [Testing Framework] --> [Core System]
+}
+@enduml
+```
+
+2. Component Diagram
+```plantuml
+@startuml
+component "User Interface" {
+    interface "IUserInteraction" as IUserInteraction
+    [Main Menu] --> IUserInteraction
+    [Introductory Movie] --> IUserInteraction
+    [Help Section] --> IUserInteraction
+    [Navigation] --> IUserInteraction
+}
+
+component "Core System" {
+    interface "IScoring" as IScoring
+    interface "IStoryline" as IStoryline
+    interface "IQuestionManagement" as IQuestionManagement
+    [Scoring Engine] --> IScoring
+    [Storyline Engine] --> IStoryline
+    [Question Management System] --> IQuestionManagement
+}
+
+component "Web Browser Interface" {
+    interface "IBrowserSupport" as IBrowserSupport
+    [Flash Support] --> IBrowserSupport
+    [Browser Compatibility] --> IBrowserSupport
+}
+
+component "Administrative Interface" {
+    interface "IAdminTools" as IAdminTools
+    [Question Editor] --> IAdminTools
+    [Real-time Updates] --> IAdminTools
+}
+
+component "Network Infrastructure" {
+    interface "INetwork" as INetwork
+    [Web Server] --> INetwork
+    [Network Configuration] --> INetwork
+}
+
+component "Testing Framework" {
+    interface "ITesting" as ITesting
+    [Quality Assurance Tools] --> ITesting
+}
+
+IUserInteraction ..> IScoring
+IUserInteraction ..> IStoryline
+IUserInteraction ..> IQuestionManagement
+IAdminTools ..> IQuestionManagement
+IBrowserSupport ..> INetwork
+ITesting ..> IScoring
+ITesting ..> IStoryline
+ITesting ..> IQuestionManagement
+@enduml
+```
+
+These diagrams represent the modular structure and high-level components of the Space Fractions system, illustrating the relationships and dependencies between different parts of the system.Process View:
+
+1. Activity Diagram
+```plantuml
+@startuml
+start
+
+:Display Introductory Movie;
+if (Skip Intro?) then (yes)
+  :Display Main Menu;
+else (no)
+  :Play Introductory Movie;
+  :Display Main Menu;
+endif
+
+repeat
+  :Select Option;
+  if (Option = Start Game) then (yes)
+    :Present Fraction Questions;
+    repeat
+      :Answer Question;
+      if (Correct Answer?) then (yes)
+        :Provide Positive Feedback;
+      else (no)
+        :Provide Negative Feedback;
+      endif
+    repeat while (More Questions?)
+    :Calculate Score;
+    :Display Score and Narrative Outcome;
+    if (Retry?) then (yes)
+      :Restart Game;
+    else (no)
+      :End Game;
+    endif
+  else if (Option = Access Resources) then (yes)
+    :Open Educational Resources;
+  else if (Option = Help) then (yes)
+    :Display Help Section;
+  endif
+repeat while (User Navigates)
+
+stop
+@enduml
+```
+
+2. Sequence Diagram
+```plantuml
+@startuml
+participant User
+participant System
+participant ScoringEngine
+participant WebBrowser
+
+User -> System: Start Game
+activate System
+System -> WebBrowser: Display Introductory Movie
+alt Skip Intro
+  User -> WebBrowser: Skip Movie
+end
+System -> WebBrowser: Display Main Menu
+loop Game Session
+  User -> System: Select Start Game
+  activate System
+  loop Question Session
+    System -> User: Present Question
+    User -> System: Answer Question
+    alt Correct Answer
+      System -> User: Provide Positive Feedback
+    else Incorrect Answer
+      System -> User: Provide Negative Feedback
+    end
+  end
+  System -> ScoringEngine: Calculate Score
+  ScoringEngine -> System: Return Score
+  System -> User: Display Score and Outcome
+  User -> System: Retry or Exit
+end
+deactivate System
+@enduml
+```
+
+3. Collaboration Diagram
+```plantuml
+@startuml
+participant User
+participant System
+participant ScoringEngine
+participant WebBrowser
+
+User -> System: Start Game
+System -> WebBrowser: Display Introductory Movie
+WebBrowser -> User: Introductory Movie
+User -> WebBrowser: Skip Movie
+WebBrowser -> System: Display Main Menu
+User -> System: Select Start Game
+System -> User: Present Question
+User -> System: Answer Question
+System -> User: Provide Feedback
+System -> ScoringEngine: Calculate Score
+ScoringEngine -> System: Return Score
+System -> User: Display Score and Outcome
+User -> System: Retry or Exit
+@enduml
+```
+
+These diagrams provide a comprehensive view of the processes and interactions within the Space Fractions system, illustrating the workflow, component interactions, and object collaborations.Physical View:
+
+1. Deployment Diagram
+```plantuml
+@startuml
+node "User's Computer" {
+    [Web Browser]
+}
+
+node "Internet" {
+    cloud "Network Infrastructure" {
+        [Web Server]
+    }
+}
+
+node "S2S Website" {
+    [Space Fractions System]
+    [Database]
+}
+
+[Web Browser] --> [Web Server] : HTTP/HTTPS
+[Web Server] --> [Space Fractions System] : HTTP/HTTPS
+[Space Fractions System] --> [Database] : SQL
+
+@enduml
+```
+
+2. Container Diagram
+```plantuml
+@startuml
+package "Space Fractions System" {
+    artifact "User Interface" {
+        [Introductory Movie]
+        [Main Menu]
+        [Help Section]
+        [Game Interface]
+    }
+
+    artifact "Core System" {
+        [Scoring Engine]
+        [Storyline Engine]
+        [Question Management System]
+    }
+
+    artifact "Administrative Interface" {
+        [Question Editor]
+    }
+
+    artifact "External Resources" {
+        [Math Umbrella]
+    }
+}
+
+[User Interface] --> [Core System] : User Interactions
+[Core System] --> [Database] : Data Storage
+[Administrative Interface] --> [Question Management System] : Update Questions
+[User Interface] --> [External Resources] : Access Educational Content
+
+@enduml
+```
+
+These diagrams provide a clear representation of the physical deployment and high-level software architecture of the Space Fractions system, illustrating the interactions between various components and their deployment across hardware nodes.```plantuml
+@startuml
+
+!define USECASE_COLOR #ADD8E6
+!define ACTOR_COLOR #FFCC99
+
+skinparam usecase {
+  BackgroundColor USECASE_COLOR
+  BorderColor black
+  ArrowColor black
+}
+
+skinparam actor {
+  BackgroundColor ACTOR_COLOR
+  BorderColor black
+}
+
+actor User as u
+actor Administrator as a
+
+usecase "View Introductory Movie" as UC1
+usecase "Skip Introductory Movie" as UC2
+usecase "Start Game" as UC3
+usecase "Access Educational Resources" as UC4
+usecase "View Help Section" as UC5
+usecase "Answer Questions" as UC6
+usecase "Receive Feedback" as UC7
+usecase "View Score and Outcome" as UC8
+usecase "Retry or Exit Game" as UC9
+usecase "Update Questions" as UC10
+usecase "Validate and Save Questions" as UC11
+usecase "Access External Resources" as UC12
+
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC4
+u --> UC5
+u --> UC6
+u --> UC7
+u --> UC8
+u --> UC9
+u --> UC12
+
+a --> UC10
+a --> UC11
+
+UC1 .> UC2 : <<extends>>
+UC3 .> UC6 : <<includes>>
+UC6 .> UC7 : <<includes>>
+UC8 .> UC9 : <<includes>>
+UC10 .> UC11 : <<includes>>
+
+@enduml
+```
+
+This PlantUML script generates a use case diagram that illustrates how users and administrators interact with the Space Fractions system. The diagram includes actors (User and Administrator), use cases, and relationships such as includes and extends to represent system functionality from a user perspective.Architectural Decisions:
+
+1. **Web-Based System with Flash Support**
+   - **Decision**: The system will be web-based and require a web browser capable of running Flash movies.
+   - **Alternatives Considered**: HTML5-based system, standalone application.
+   - **Trade-offs**: Flash provides rich multimedia capabilities but limits compatibility with modern browsers as Flash is deprecated. HTML5 would offer broader compatibility but may require reworking existing Flash content.
+   - **Reasoning**: Flash was chosen due to existing content and the requirement for interactive multimedia, despite its limitations.
+
+2. **Standalone Application Design**
+   - **Decision**: The system will be designed as a standalone application, not dependent on other software.
+   - **Alternatives Considered**: Integration with existing educational platforms.
+   - **Trade-offs**: Independence ensures modularity and ease of deployment but may limit integration with other educational tools.
+   - **Reasoning**: Independence was prioritized to ensure ease of maintenance and deployment across various environments.
+
+3. **Dynamic and Adaptive Storyline**
+   - **Decision**: Implement a dynamic content generation system to adapt storylines based on user progress.
+   - **Alternatives Considered**: Static storyline with predefined paths.
+   - **Trade-offs**: Dynamic content increases complexity and requires more robust data handling but enhances user engagement.
+   - **Reasoning**: Adaptability was chosen to improve user experience and educational effectiveness.
+
+4. **Cross-Platform Compatibility**
+   - **Decision**: Ensure the system runs on any Internet-accessible computer with a compatible web browser.
+   - **Alternatives Considered**: Platform-specific applications.
+   - **Trade-offs**: Cross-platform design may limit the use of platform-specific optimizations but increases accessibility.
+   - **Reasoning**: Portability and accessibility were prioritized to reach a wider audience.
+
+5. **Real-Time Score Calculation and Ranking**
+   - **Decision**: Implement efficient data processing and storage mechanisms for real-time score calculation.
+   - **Alternatives Considered**: Batch processing of scores.
+   - **Trade-offs**: Real-time processing requires more immediate resource allocation but provides instant feedback to users.
+   - **Reasoning**: Real-time feedback was prioritized to enhance user engagement and learning outcomes.
+
+6. **Flexible Question Management System**
+   - **Decision**: Develop a flexible module for administrators to update and customize questions.
+   - **Alternatives Considered**: Static question set.
+   - **Trade-offs**: Flexibility increases system complexity but allows for content updates without system downtime.
+   - **Reasoning**: Flexibility and maintainability were prioritized to keep educational content current and relevant.
+
+7. **High Availability and Accessibility**
+   - **Decision**: Design the system for high availability via robust hosting solutions.
+   - **Alternatives Considered**: Localized server deployment.
+   - **Trade-offs**: Centralized hosting may incur higher costs but ensures consistent access and performance.
+   - **Reasoning**: Availability and accessibility were prioritized to ensure users can access the system reliably.
+
+8. **Comprehensive Testing Framework**
+   - **Decision**: Integrate extensive testing frameworks to ensure reliability and performance.
+   - **Alternatives Considered**: Minimal testing with ad-hoc bug fixes.
+   - **Trade-offs**: Comprehensive testing requires more initial resources but reduces long-term maintenance costs.
+   - **Reasoning**: Reliability and quality assurance were prioritized to maintain user trust and system integrity.
+
+These architectural decisions were made to align with the project's requirements and constraints, ensuring a balance between functionality, user experience, and system maintainability.

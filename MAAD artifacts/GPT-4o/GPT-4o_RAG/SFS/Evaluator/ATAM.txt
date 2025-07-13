@@ -1,0 +1,70 @@
+# Architecture Evaluation Report for Space Fractions System
+
+## 1. Concise Presentation of the Architecture
+
+The Space Fractions system is a web-based educational tool designed to enhance fraction-solving skills for sixth-grade students. The architecture is structured around several key components:
+
+- **User Interface**: Facilitates user interaction through a main menu, introductory movie, and help section.
+- **Core System**: Includes the Scoring Engine, Storyline Engine, and Question Management System to handle game logic and educational content.
+- **Web Browser Interface**: Ensures compatibility with browsers supporting Flash.
+- **Administrative Interface**: Allows administrators to update and manage questions.
+- **Network Infrastructure**: Supports web-based deployment and accessibility.
+- **Testing Framework**: Ensures system reliability and performance through quality assurance tools.
+
+## 2. Articulation of the Business Goals
+
+The primary business goals for the Space Fractions system are:
+
+- **Enhance Educational Outcomes**: Improve students' understanding and skills in solving fraction problems.
+- **Engage Students**: Provide an interactive and engaging learning experience.
+- **Accessibility**: Ensure the system is accessible to a wide audience via the internet.
+- **Maintainability**: Facilitate easy updates and maintenance of educational content.
+- **Reliability**: Deliver a stable and consistent user experience.
+
+## 3. Prioritized Quality Attribute Requirements
+
+The quality attribute requirements, expressed as scenarios, are prioritized as follows:
+
+1. **Usability**: The system must be intuitive for students and teachers, with clear navigation and feedback.
+2. **Performance**: Real-time score calculation and immediate feedback are essential for maintaining engagement.
+3. **Maintainability**: Administrators should be able to update questions easily without downtime.
+4. **Availability**: The system should be accessible at all times via the internet.
+5. **Security**: Protect user data and ensure secure access to administrative functions.
+
+## 4. Set of Risks and Non-Risks
+
+### Risks
+
+- **Flash Dependency**: The reliance on Flash may limit compatibility with modern browsers, affecting usability and accessibility.
+- **Dynamic Content Complexity**: The adaptive storyline increases system complexity, potentially impacting performance and maintainability.
+- **Real-Time Processing**: Immediate score calculation requires efficient resource management, posing a risk to performance.
+
+### Non-Risks
+
+- **Web-Based Deployment**: Ensures broad accessibility and aligns with the business goal of reaching a wide audience.
+- **Standalone Design**: Facilitates ease of deployment and maintenance, supporting the maintainability goal.
+
+## 5. Set of Risk Themes
+
+- **Technology Obsolescence**: The use of Flash poses a systemic risk due to its deprecation, threatening long-term accessibility and usability.
+- **Complexity Management**: The dynamic and adaptive content requires careful management to avoid performance and maintainability issues.
+
+## 6. Mapping of Architectural Decisions to Quality Requirements
+
+- **Web-Based System with Flash Support**: Supports accessibility but hinders usability due to Flash's limitations.
+- **Dynamic and Adaptive Storyline**: Enhances engagement (usability) but complicates maintainability.
+- **Real-Time Score Calculation**: Improves performance but requires efficient resource allocation.
+
+## 7. Set of Identified Sensitivity Points and Tradeoff Points
+
+### Sensitivity Points
+
+- **Flash Dependency**: Directly impacts usability and accessibility.
+- **Dynamic Content**: Affects both engagement and system complexity.
+
+### Tradeoff Points
+
+- **Real-Time Processing vs. Resource Management**: Enhancing performance through real-time feedback may strain system resources, impacting reliability.
+- **Dynamic Storyline vs. Maintainability**: Increasing engagement through adaptive content may complicate updates and maintenance.
+
+In conclusion, the Space Fractions system architecture is designed to meet educational and engagement goals while facing challenges related to technology choices and system complexity. Addressing the identified risks and tradeoffs will be crucial to achieving the desired quality attributes and business objectives.

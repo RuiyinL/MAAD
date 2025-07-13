@@ -1,0 +1,155 @@
+# Space Fractions System Architecture Document
+
+## 1. Goals
+
+The primary objectives of the Space Fractions system architecture are:
+
+- **Compatibility and Accessibility**: Ensure the system is accessible via any web browser that supports Flash, providing a consistent user experience across different platforms and devices.
+- **Modularity and Maintainability**: Design a modular architecture that allows for easy updates and maintenance of educational content and system features.
+- **Security and Reliability**: Implement robust security measures aligned with web browser standards to protect user data and ensure reliable system performance.
+- **Adaptability and User Experience**: Create a dynamic and adaptive system that personalizes the storyline based on user progress, enhancing the educational experience.
+- **Extensibility and Interoperability**: Support integration with external educational resources, allowing for seamless addition of new content and resources.
+
+## 2. Detailed Architecture Design
+
+### System Components and Modules
+
+1. **User Interface (UI)**
+   - **Components**: Main Menu, Introductory Movie, Help Section
+   - **Interactions**: Provides navigation and interaction points for users.
+
+2. **Gameplay**
+   - **Components**: Question Engine, Storyline Manager, Score Calculator
+   - **Interactions**: Manages the presentation of questions, adapts the storyline, and calculates scores.
+
+3. **Admin Tools**
+   - **Components**: Question Updater, Admin Interface
+   - **Interactions**: Allows administrators to update and manage game content.
+
+4. **External Resources**
+   - **Components**: Math Umbrella, Resource Integration Layer
+   - **Interactions**: Integrates external educational resources.
+
+5. **System Infrastructure**
+   - **Components**: Web Server, Load Balancer, Network Infrastructure
+   - **Interactions**: Supports system availability and performance.
+
+6. **Security**
+   - **Components**: Security Module, User Authentication System
+   - **Interactions**: Ensures secure user interactions and data protection.
+
+7. **Compatibility**
+   - **Components**: Web Browser Compatibility Layer, Cross-Platform Compatibility Layer
+   - **Interactions**: Ensures system compatibility across different browsers and platforms.
+
+### Interactions and Interfaces
+
+- **User Interface to Gameplay**: The UI interacts with the Question Engine to present questions and receive user input.
+- **Gameplay to Admin Tools**: The Question Engine interfaces with the Admin Interface for content updates.
+- **External Resources to System Infrastructure**: The Resource Integration Layer communicates with the Web Server to access external content.
+- **Security to System Infrastructure**: The Security Module ensures secure access to the Web Server.
+
+## 3. Component & Connector Specifications
+
+### Communication Protocols
+
+- **REST API**: Used for communication between the Web Server and external resources, providing a standardized interface for data exchange.
+- **Event-Driven Messaging**: Utilized within the system to handle user interactions and adapt the storyline dynamically.
+
+### Error-Handling Mechanisms
+
+- **Graceful Degradation**: Implement fallback options for non-Flash environments to maintain usability.
+- **Error Logging**: Centralized logging of errors for monitoring and troubleshooting.
+
+### Performance Thresholds
+
+- **Response Time**: Ensure immediate output timing for responsive gameplay.
+- **Load Handling**: Support multiple concurrent users with efficient load balancing.
+
+## 4. Key Technologies
+
+### Infrastructure Configuration
+
+- **Web Server**: Apache or Nginx configured for high availability and performance.
+- **Load Balancer**: HAProxy for distributing traffic and ensuring system reliability.
+- **Database**: MySQL or PostgreSQL for storing user data and game content.
+
+### Scalability and Fault-Tolerance Trade-offs
+
+- **Scalability**: Horizontal scaling of web servers and load balancers to accommodate increased user load.
+- **Fault-Tolerance**: Redundant server configurations and regular backups to ensure data integrity and system availability.
+
+## 5. Design Decisions
+
+### Chosen Design Patterns
+
+- **Model-View-Controller (MVC)**: Separates concerns within the system, enhancing maintainability and scalability.
+- **Observer Pattern**: Used for dynamic storyline adaptation based on user progress.
+
+### Technology Selections
+
+- **Flash**: Chosen for compatibility with existing educational content, despite its limitations.
+- **REST API**: Selected for its simplicity and widespread adoption in web applications.
+
+## 6. Design Decision Rationale
+
+### Technology Choices
+
+- **Flash**: Despite its deprecation, Flash was chosen due to existing content dependencies and the need for compatibility with legacy systems.
+- **REST API**: Provides a lightweight and flexible communication protocol suitable for web-based applications.
+
+### Pattern Adoption
+
+- **MVC**: Facilitates separation of concerns, making the system easier to maintain and extend.
+- **Observer Pattern**: Enables real-time updates and dynamic content delivery, enhancing user experience.
+
+## 7. Executable Prototype Skeleton
+
+### Code Scaffolding for Critical Modules
+
+```python
+# User Interface Module
+class UserInterface:
+    def display_intro(self):
+        pass
+
+    def display_main_menu(self):
+        pass
+
+    def navigate(self):
+        pass
+
+# Question Engine Module
+class QuestionEngine:
+    def present_question(self):
+        pass
+
+    def evaluate_answer(self):
+        pass
+
+    def provide_feedback(self):
+        pass
+
+# Storyline Manager Module
+class StorylineManager:
+    def adapt_storyline(self):
+        pass
+
+    def display_concluding_scene(self):
+        pass
+
+# Admin Interface Module
+class AdminInterface:
+    def update_questions(self):
+        pass
+
+    def validate_data(self):
+        pass
+
+# Security Module
+class SecurityModule:
+    def ensure_security(self):
+        pass
+```
+
+This code scaffolding provides a basic structure for the critical modules within the Space Fractions system, allowing for further development and implementation of detailed functionalities.

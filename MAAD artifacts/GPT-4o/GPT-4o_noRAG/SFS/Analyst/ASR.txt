@@ -1,0 +1,51 @@
+The ASRs are:
+
+1. **ASR-001**:
+   - Original text of ASR1: "The Space Fractions system requires a web browser capable of running Flash movies."
+   - Related quality attribute(s): Compatibility, Usability
+   - Architectural Impact: The system architecture must ensure compatibility with web browsers that support Flash, potentially limiting the choice of technologies and requiring fallback options for non-Flash environments.
+   - Related Components: User Interface, Web Browser Compatibility Layer
+
+2. **ASR-002**:
+   - Original text of ASR2: "The Space Fractions system will have a series of fraction questions (testing arithmetic, equivalence, graphical interpretation, and improper versus proper fraction skills) that sequentially form a storyline related to the introduction."
+   - Related quality attribute(s): Modularity, Maintainability
+   - Architectural Impact: The architecture must support modular question components that can be easily updated or replaced, ensuring maintainability and adaptability of educational content.
+   - Related Components: Question Engine, Storyline Manager
+
+3. **ASR-003**:
+   - Original text of ASR3: "The administrator of the Space Fractions system may wish to design a custom system complete with custom fraction questions."
+   - Related quality attribute(s): Flexibility, Maintainability
+   - Architectural Impact: The system must include an administrative interface that allows for dynamic content updates without requiring system downtime, supporting real-time content management.
+   - Related Components: Admin Interface, Content Management System
+
+4. **ASR-004**:
+   - Original text of ASR4: "The Space Fractions system will run on any Internet-accessible computer with a web browser that supports Flash."
+   - Related quality attribute(s): Portability, Accessibility
+   - Architectural Impact: The architecture must ensure that the system is platform-independent and can be accessed from various devices and operating systems, requiring a focus on web standards and cross-platform compatibility.
+   - Related Components: Web Application Framework, Cross-Platform Compatibility Layer
+
+5. **ASR-005**:
+   - Original text of ASR5: "The Space Fractions system will be as secure as the web browser that will run the product."
+   - Related quality attribute(s): Security, Reliability
+   - Architectural Impact: The system must implement security measures that align with browser security standards, ensuring data protection and secure user interactions.
+   - Related Components: Security Module, User Authentication System
+
+6. **ASR-006**:
+   - Original text of ASR6: "The Space Fractions system will be available over the Internet via the S2S website."
+   - Related quality attribute(s): Availability, Performance
+   - Architectural Impact: The architecture must support high availability and efficient performance, potentially requiring load balancing and distributed server architecture to handle multiple users.
+   - Related Components: Web Server, Load Balancer, Network Infrastructure
+
+7. **ASR-007**:
+   - Original text of ASR7: "The systemplay will be dynamic and adaptive to provide different storylines based on the user's progress."
+   - Related quality attribute(s): Adaptability, User Experience
+   - Architectural Impact: The system must include a dynamic content delivery mechanism that adapts the storyline based on user interactions, requiring a flexible and responsive architecture.
+   - Related Components: Storyline Engine, User Progress Tracker
+
+8. **ASR-008**:
+   - Original text of ASR8: "The Math Umbrella component is designed to serve as an educational resource hub within the system."
+   - Related quality attribute(s): Extensibility, Interoperability
+   - Architectural Impact: The architecture must support integration with external educational resources, requiring an extensible design that allows for seamless addition of new content and resources.
+   - Related Components: Resource Integration Layer, External Content API
+
+These ASRs highlight the critical architectural considerations necessary to ensure the Space Fractions system meets its functional and quality requirements effectively.

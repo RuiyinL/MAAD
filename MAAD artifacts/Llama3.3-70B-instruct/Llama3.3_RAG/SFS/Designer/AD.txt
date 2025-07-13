@@ -1,0 +1,76 @@
+**Software Architecture Document**
+
+**Introduction**
+
+The Space Fractions system is designed to provide an interactive and adaptive learning experience for users. The primary objectives of the architecture are to ensure compatibility, usability, modularity, independence, flexibility, maintainability, and reliability.
+
+**Goals**
+
+The primary objectives of the Space Fractions system architecture are:
+
+1. **Compatibility**: Ensure the system is accessible via a web browser that supports Flash movies.
+2. **Usability**: Provide an intuitive and user-friendly interface for users to interact with the system.
+3. **Modularity**: Design the system as a standalone application to ensure independence and modularity.
+4. **Flexibility**: Implement a flexible question management module for administrators to update and customize questions.
+5. **Maintainability**: Prioritize maintainability in the system design to facilitate ease of updates and modifications to educational content.
+6. **Reliability**: Ensure the system's reliability and performance under various conditions.
+
+**Detailed Architecture Design**
+
+The Space Fractions system consists of the following components and modules:
+
+1. **User Interface**: Provides an introductory movie, main menu, and question display.
+2. **Web Browser Interface**: Handles user input and displays the system's output.
+3. **Core System**: Manages the system's logic, including question generation, scoring, and feedback.
+4. **Scoring Engine**: Calculates and displays the user's score.
+5. **Question Management System**: Allows administrators to update and customize questions.
+6. **Administrative Interface**: Provides a user-friendly interface for administrators to manage questions.
+
+The components and modules interact with each other through the following interfaces:
+
+1. **REST API**: Handles communication between the User Interface and Core System.
+2. **Event-Driven Messaging**: Handles communication between the Core System and Scoring Engine.
+
+**Component & Connector Specifications**
+
+The system uses the following communication protocols:
+
+1. **REST API**: JSON format, with error-handling mechanisms and performance thresholds.
+2. **Event-Driven Messaging**: XML format, with error-handling mechanisms and performance thresholds.
+
+**Key Technologies**
+
+The system uses the following technologies:
+
+1. **Front-end**: HTML, CSS, JavaScript, and Flash.
+2. **Back-end**: Java, Spring Framework, and MySQL.
+3. **Infrastructure**: Cloud-based, with scalability and fault-tolerance trade-offs.
+
+**Design Decisions**
+
+The following design decisions were made:
+
+1. **Use of Flash**: To provide interactive content and ensure compatibility with web browsers that support Flash.
+2. **Modular design**: To ensure independence and modularity, and to facilitate ease of updates and modifications.
+3. **Flexible question management**: To allow administrators to update and customize questions.
+4. **Scalability and fault-tolerance**: To ensure the system's reliability and performance under various conditions.
+
+**Design Decision Rationale**
+
+The design decisions were made based on the following rationale:
+
+1. **Use of Flash**: To provide interactive content and ensure compatibility with web browsers that support Flash.
+2. **Modular design**: To ensure independence and modularity, and to facilitate ease of updates and modifications.
+3. **Flexible question management**: To allow administrators to update and customize questions, and to improve the system's maintainability.
+4. **Scalability and fault-tolerance**: To ensure the system's reliability and performance under various conditions, and to improve the system's availability.
+
+**Executable Prototype Skeleton**
+
+The following code scaffolding is provided for critical modules:
+
+1. **User Interface**: HTML, CSS, and JavaScript files for the introductory movie, main menu, and question display.
+2. **Core System**: Java classes for the system's logic, including question generation, scoring, and feedback.
+3. **Scoring Engine**: Java classes for calculating and displaying the user's score.
+4. **Question Management System**: Java classes for allowing administrators to update and customize questions.
+
+Note: The code scaffolding is not provided in this document, but it will be generated and reviewed separately.

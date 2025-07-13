@@ -1,0 +1,61 @@
+The ASRs are:
+
+1. **ASR-001**:
+    - **Original text**: The Space Fractions system requires a web browser capable of running Flash movies.
+    - **Related quality attribute(s)**: Compatibility, Performance Efficiency, Usability
+    - **Architectural Impact**: Requires a client-server architecture with Flash support, including fallback mechanisms for browsers without Flash. Cross-platform compatibility must be ensured.
+    - **Related Components**: Frontend (Flash-based UI), Browser Compatibility Layer, Media Delivery Server.
+
+2. **ASR-002**:
+    - **Original text**: The administrator of the Space Fractions system may wish to design a custom system complete with custom fraction questions, saved in a file on the web server.
+    - **Related quality attribute(s)**: Modifiability, Maintainability, Security
+    - **Architectural Impact**: Requires a secure administrative interface with role-based access control (RBAC), dynamic content loading, and a database/file system for storing/updating questions. Backend APIs must support real-time content updates.
+    - **Related Components**: Admin Interface, Database/File Storage, Content Management System (CMS).
+
+3. **ASR-003**:
+    - **Original text**: The system must run on any Internet-accessible computer with a web browser that supports Flash, ensuring accessibility for sixth-grade students with basic computer skills.
+    - **Related quality attribute(s)**: Usability, Portability, Accessibility
+    - **Architectural Impact**: Lightweight, browser-agnostic design with minimal dependencies. Responsive UI components and clear navigation paths for users with varying technical proficiency.
+    - **Related Components**: Frontend UI, Browser Compatibility Layer, Help System.
+
+4. **ASR-004**:
+    - **Original text**: The user's score must be kept as local data within the system to provide end-of-game feedback.
+    - **Related quality attribute(s)**: Reliability, Performance Efficiency, Privacy
+    - **Architectural Impact**: Local storage mechanisms (e.g., browser cookies/localStorage) to persist scores without server dependency. Synchronization with server-side data if required for cross-device access.
+    - **Related Components**: Game State Manager, Local Storage Module, Score Calculation Engine.
+
+5. **ASR-005**:
+    - **Original text**: The system must adaptively provide different storylines based on the user’s progress and critical question responses.
+    - **Related quality attribute(s)**: Flexibility, Performance Efficiency, Personalization
+    - **Architectural Impact**: Dynamic content delivery with decision trees or rule-based engines to manage branching storylines. State management to track user progress and critical decisions.
+    - **Related Components**: Storyline Engine, Decision Tree Module, User Progress Tracker.
+
+6. **ASR-006**:
+    - **Original text**: The Math Umbrella component must link to external S2S projects via web documents, accessible within the game environment.
+    - **Related quality attribute(s)**: Interoperability, Security, Usability
+    - **Architectural Impact**: Secure integration with external resources (e.g., iframes, API gateways) to prevent cross-site scripting (XSS) risks. Seamless navigation between internal and external components.
+    - **Related Components**: External Link Handler, Security Module, UI Navigation Controller.
+
+7. **ASR-007**:
+    - **Original text**: The introductory and main menu movies must load within one minute on a modem connection.
+    - **Related quality attribute(s)**: Performance Efficiency, Usability
+    - **Architectural Impact**: Optimized media compression (e.g., low-bitrate Flash streaming) and lazy loading techniques. Content Delivery Network (CDN) integration for faster asset delivery.
+    - **Related Components**: Media Optimizer, CDN Integration, Asset Loader.
+
+8. **ASR-008**:
+    - **Original text**: The Question Updater requires an intuitive web forms interface for administrators to modify questions.
+    - **Related quality attribute(s)**: Usability, Security, Modifiability
+    - **Architectural Impact**: Secure admin portal with form validation, input sanitization, and audit logging. Backend integration with the CMS to propagate changes instantly.
+    - **Related Components**: Admin Interface, Validation Service, Audit Logging Module.
+
+9. **ASR-009**:
+    - **Original text**: The system must handle concurrent access by multiple users downloading and running the game.
+    - **Related quality attribute(s)**: Scalability, Availability, Performance Efficiency
+    - **Architectural Impact**: Stateless server design with load balancing and scalable cloud hosting. Caching mechanisms for frequently accessed assets (e.g., movies, questions).
+    - **Related Components**: Load Balancer, Cloud Hosting Service, Caching Layer.
+
+10. **ASR-010**:
+    - **Original text**: Maintainability is a primary goal, requiring simplified administrative screens and modular components.
+    - **Related quality attribute(s)**: Maintainability, Testability, Modularity
+    - **Architectural Impact**: Microservices or modular monolith architecture with clear separation of concerns (e.g., UI, business logic, data layers). Comprehensive documentation and automated testing frameworks.
+    - **Related Components**: All components, Documentation System, CI/CD Pipeline.

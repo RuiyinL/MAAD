@@ -1,0 +1,16 @@
+Here are the Design Constraints (DC) based on the provided software requirements specification:
+
+The Design Constraints are:
+
+1. DC-001: The system must provide a personalized ending that varies from one session to another based on the player's performance, emphasizing educational progress and decisions.
+2. DC-002: The Question Updater tool must be designed for ease of use, allowing administrators to efficiently input new data or modify existing questions through a user-friendly interface with pulldown menus and text fields.
+3. DC-003: The system must perform validation checks on submitted data to ensure completeness and contextual relevance to the game's educational objectives, maintaining the quality and integrity of the system content.
+4. DC-004: The Math Umbrella component must provide players with easy access to a curated selection of external S2S projects that are specifically tailored to sixth graders, organized by mathematical topics such as fractions.
+5. DC-005: The system must ensure seamless integration of new or revised educational material into the game sequence without requiring system restarts or interruptions.
+6. DC-006: Only one person can use a single instance of the Space Fractions system at any given time, but multiple users can access and download the content for use on their computers.
+7. DC-007: The system must be designed to minimize download times for introductory and main menu movies, allowing for quick access to the game.
+8. DC-008: The system must ensure security by adhering to the same level of security as the web browser that will run the product.
+9. DC-009: The system must be available over the Internet via the S2S website, with reliability ensured through extensive testing by team members and mentors.
+10. DC-010: Maintainability is a primary goal for this project, requiring careful design and implementation to ensure ease of maintenance and updates.
+
+Let me know if you'd like me to help with anything else!

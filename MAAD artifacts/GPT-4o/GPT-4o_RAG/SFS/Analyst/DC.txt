@@ -1,0 +1,12 @@
+The Design Constraints are:
+
+1. DC-001: The Space Fractions system must be web-based and accessible via a web browser that supports Flash movies.
+2. DC-002: The system must be compatible with any Internet-accessible computer, requiring no additional hardware.
+3. DC-003: The system must not depend on any other software and should not be a component of another program.
+4. DC-004: The system must ensure that the introductory and main menu movies are small enough to be downloaded quickly, even with a modem connection.
+5. DC-005: The system must maintain security standards equivalent to those of the web browser used to access it.
+6. DC-006: The system must allow for real-time updates to the game's content without requiring system restarts or interruptions.
+7. DC-007: The system must support a single user per instance, but allow multiple users to access and download the content from the Internet.
+8. DC-008: The system must provide a seamless transition between the main system and external educational resources, maintaining the user's context within the main system environment.
+9. DC-009: The system must include a user-friendly interface for administrators to update and edit questions, ensuring the educational content remains current and accurate.
+10. DC-010: The system must be designed to be maintainable, with a focus on ease of updates and modifications to the educational content.

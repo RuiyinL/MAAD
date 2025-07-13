@@ -1,0 +1,462 @@
+Logical View:
+
+1. Class Diagram
+```plantuml
+@startuml
+class SpaceFractionsSystem {
+    +initialize()
+    +run()
+}
+
+class UserInterface {
+    +displayIntro()
+    +displayMainMenu()
+    +navigate()
+}
+
+class QuestionEngine {
+    +presentQuestion()
+    +evaluateAnswer()
+    +provideFeedback()
+}
+
+class StorylineManager {
+    +adaptStoryline()
+    +displayConcludingScene()
+}
+
+class AdminInterface {
+    +updateQuestions()
+    +validateData()
+}
+
+class ContentManagementSystem {
+    +realTimeUpdate()
+}
+
+class SecurityModule {
+    +ensureSecurity()
+}
+
+class WebApplicationFramework {
+    +ensureCompatibility()
+}
+
+class ResourceIntegrationLayer {
+    +integrateExternalResources()
+}
+
+SpaceFractionsSystem --> UserInterface
+SpaceFractionsSystem --> QuestionEngine
+SpaceFractionsSystem --> StorylineManager
+SpaceFractionsSystem --> AdminInterface
+SpaceFractionsSystem --> ContentManagementSystem
+SpaceFractionsSystem --> SecurityModule
+SpaceFractionsSystem --> WebApplicationFramework
+SpaceFractionsSystem --> ResourceIntegrationLayer
+
+@enduml
+```
+
+2. Object Diagram
+```plantuml
+@startuml
+object sfs1 {
+    initialize()
+    run()
+}
+
+object ui1 {
+    displayIntro()
+    displayMainMenu()
+    navigate()
+}
+
+object qe1 {
+    presentQuestion()
+    evaluateAnswer()
+    provideFeedback()
+}
+
+object sm1 {
+    adaptStoryline()
+    displayConcludingScene()
+}
+
+object ai1 {
+    updateQuestions()
+    validateData()
+}
+
+object cms1 {
+    realTimeUpdate()
+}
+
+object sec1 {
+    ensureSecurity()
+}
+
+object waf1 {
+    ensureCompatibility()
+}
+
+object ril1 {
+    integrateExternalResources()
+}
+
+sfs1 -- ui1
+sfs1 -- qe1
+sfs1 -- sm1
+sfs1 -- ai1
+sfs1 -- cms1
+sfs1 -- sec1
+sfs1 -- waf1
+sfs1 -- ril1
+
+@enduml
+```
+
+3. State Diagram
+```plantuml
+@startuml
+[*] --> Initializing
+Initializing --> Running : initialize()
+Running --> DisplayingIntro : displayIntro()
+DisplayingIntro --> MainMenu : displayMainMenu()
+MainMenu --> Navigating : navigate()
+Navigating --> PresentingQuestion : presentQuestion()
+PresentingQuestion --> EvaluatingAnswer : evaluateAnswer()
+EvaluatingAnswer --> ProvidingFeedback : provideFeedback()
+ProvidingFeedback --> AdaptingStoryline : adaptStoryline()
+AdaptingStoryline --> DisplayingConcludingScene : displayConcludingScene()
+DisplayingConcludingScene --> [*]
+
+@enduml
+```
+
+These diagrams provide a logical view of the Space Fractions system, illustrating the key components, their interactions, and the lifecycle of the system.To create the "Logic View" using PlantUML syntax, we will generate both a Package Diagram and a Component Diagram based on the provided requirements. These diagrams will help visualize the modular structure and high-level components of the Space Fractions system.
+
+### Development View:
+
+#### 1. Package Diagram
+The Package Diagram will represent the modular structure of the system, showing the organization of code into packages, their dependencies, and hierarchical relationships.
+
+```plantuml
+@startuml
+package "Space Fractions System" {
+    package "User Interface" {
+        [Main Menu]
+        [Introductory Movie]
+        [Help Section]
+    }
+    
+    package "Gameplay" {
+        [Question Engine]
+        [Storyline Manager]
+        [Score Calculator]
+    }
+    
+    package "Admin Tools" {
+        [Question Updater]
+        [Admin Interface]
+    }
+    
+    package "External Resources" {
+        [Math Umbrella]
+        [Resource Integration Layer]
+    }
+    
+    package "System Infrastructure" {
+        [Web Server]
+        [Load Balancer]
+        [Network Infrastructure]
+    }
+    
+    package "Security" {
+        [Security Module]
+        [User Authentication System]
+    }
+    
+    package "Compatibility" {
+        [Web Browser Compatibility Layer]
+        [Cross-Platform Compatibility Layer]
+    }
+}
+
+[Main Menu] --> [Introductory Movie]
+[Main Menu] --> [Help Section]
+[Question Engine] --> [Storyline Manager]
+[Question Engine] --> [Score Calculator]
+[Admin Interface] --> [Question Updater]
+[Math Umbrella] --> [Resource Integration Layer]
+[Web Server] --> [Load Balancer]
+[Web Server] --> [Network Infrastructure]
+[Security Module] --> [User Authentication System]
+[Web Browser Compatibility Layer] --> [Cross-Platform Compatibility Layer]
+@enduml
+```
+
+#### 2. Component Diagram
+The Component Diagram will illustrate the high-level software components and their dependencies, showing how different components interact, including provided and required interfaces.
+
+```plantuml
+@startuml
+component "User Interface" {
+    [Main Menu] --> [Introductory Movie]
+    [Main Menu] --> [Help Section]
+}
+
+component "Gameplay" {
+    [Question Engine] --> [Storyline Manager]
+    [Question Engine] --> [Score Calculator]
+}
+
+component "Admin Tools" {
+    [Admin Interface] --> [Question Updater]
+}
+
+component "External Resources" {
+    [Math Umbrella] --> [Resource Integration Layer]
+}
+
+component "System Infrastructure" {
+    [Web Server] --> [Load Balancer]
+    [Web Server] --> [Network Infrastructure]
+}
+
+component "Security" {
+    [Security Module] --> [User Authentication System]
+}
+
+component "Compatibility" {
+    [Web Browser Compatibility Layer] --> [Cross-Platform Compatibility Layer]
+}
+
+[Main Menu] ..> [Question Engine] : "User Interaction"
+[Question Engine] ..> [Admin Interface] : "Content Management"
+[Resource Integration Layer] ..> [Web Server] : "Resource Access"
+[Security Module] ..> [Web Server] : "Secure Access"
+[Cross-Platform Compatibility Layer] ..> [Web Server] : "Platform Independence"
+@enduml
+```
+
+These diagrams provide a clear and informative representation of the Space Fractions system's architecture, highlighting the modular structure and component interactions.To generate the "Logic View" using PlantUML syntax, I'll create the requested diagrams based on the provided requirements. Let's start with the Process View:
+
+### Process View:
+
+#### 1. Activity Diagram
+This diagram will represent a dynamic workflow for user interaction and navigation within the Space Fractions system.
+
+```plantuml
+@startuml
+start
+:Display Introductory Movie;
+if (User skips movie?) then (yes)
+  :Display Main Menu;
+else (no)
+  :Play Introductory Movie;
+  :Display Main Menu;
+endif
+
+repeat
+  :User selects option;
+  if (Option is "Start Game") then (yes)
+    :Present Fraction Questions;
+    repeat
+      :User answers question;
+      if (Answer is correct?) then (yes)
+        :Provide positive feedback;
+      else (no)
+        :Provide corrective feedback;
+      endif
+    repeat while (More questions?)
+    :Display Concluding Scene;
+  else (no)
+    if (Option is "Access Resources") then (yes)
+      :Open Math Umbrella;
+    else (no)
+      if (Option is "Help") then (yes)
+        :Display Help Section;
+      endif
+    endif
+  endif
+repeat while (User navigates)
+stop
+@enduml
+```
+
+#### 2. Sequence Diagram
+This diagram will depict the interaction between system components during a gameplay session.
+
+```plantuml
+@startuml
+actor User
+participant "Web Browser" as wb
+participant "Space Fractions System" as sfs
+participant "Question Engine" as qe
+participant "Storyline Manager" as sm
+participant "Feedback Module" as fm
+
+User -> wb: Open Space Fractions
+wb -> sfs: Load Introductory Movie
+sfs -> User: Display Introductory Movie
+User -> sfs: Skip or Watch Movie
+sfs -> wb: Display Main Menu
+User -> sfs: Select "Start Game"
+sfs -> qe: Load Questions
+qe -> sm: Integrate Storyline
+loop For each question
+  User -> sfs: Answer Question
+  sfs -> qe: Validate Answer
+  qe -> fm: Provide Feedback
+  fm -> User: Display Feedback
+end
+sfs -> User: Display Concluding Scene
+@enduml
+```
+
+#### 3. Collaboration Diagram
+This diagram will represent the structural organization of objects interacting within the system.
+
+```plantuml
+@startuml
+participant User
+participant "Web Browser" as wb
+participant "Space Fractions System" as sfs
+participant "Question Engine" as qe
+participant "Storyline Manager" as sm
+participant "Feedback Module" as fm
+
+User -> wb: Open Space Fractions
+wb -> sfs: Load System
+sfs -> wb: Display Introductory Movie
+User -> sfs: Interact with Menu
+sfs -> qe: Load Questions
+qe -> sm: Integrate Storyline
+User -> sfs: Answer Questions
+sfs -> qe: Validate Answer
+qe -> fm: Provide Feedback
+fm -> User: Display Feedback
+sfs -> User: Display Concluding Scene
+@enduml
+```
+
+These diagrams provide a clear and informative representation of the Space Fractions system's logic view, illustrating the dynamic workflow, interactions, and structural organization of the system components.To create the Logic View using PlantUML syntax, we will generate two diagrams: a Deployment Diagram and a Container Diagram. These diagrams will illustrate the physical deployment of system components and the high-level software architecture, respectively.
+
+### Process View:
+
+#### 1. Deployment Diagram
+The Deployment Diagram models the physical deployment of system components across hardware nodes, showing servers, devices, execution environments, and their communication links.
+
+```plantuml
+@startuml
+node "User Device" {
+  [Web Browser] --> [Flash Player]
+}
+
+node "Internet" {
+  [S2S Website]
+}
+
+node "Server" {
+  [Web Server] --> [Load Balancer]
+  [Load Balancer] --> [Application Server]
+  [Application Server] --> [Database Server]
+}
+
+[Web Browser] --> [S2S Website]
+[S2S Website] --> [Web Server]
+@enduml
+```
+
+#### 2. Container Diagram
+The Container Diagram represents the high-level software architecture, including applications, databases, APIs, and their interactions. It illustrates how containers (e.g., microservices, web servers) are structured within the system.
+
+```plantuml
+@startuml
+artifact "Web Application" {
+  [User Interface]
+  [Question Engine]
+  [Storyline Manager]
+  [Admin Interface]
+  [Content Management System]
+  [Security Module]
+  [User Authentication System]
+}
+
+artifact "External Resources" {
+  [Resource Integration Layer]
+  [External Content API]
+}
+
+artifact "Infrastructure" {
+  [Web Server]
+  [Load Balancer]
+  [Network Infrastructure]
+}
+
+[User Interface] --> [Web Server]
+[Question Engine] --> [Storyline Manager]
+[Admin Interface] --> [Content Management System]
+[Security Module] --> [User Authentication System]
+[Resource Integration Layer] --> [External Content API]
+
+[Web Server] --> [Load Balancer]
+[Load Balancer] --> [Network Infrastructure]
+@enduml
+```
+
+These diagrams provide a clear and informative view of the system's architecture, illustrating the deployment and interaction of various components within the Space Fractions system.To create a Use Case Diagram using PlantUML syntax, we will illustrate how users interact with the Space Fractions system. This will include actors, use cases, and relationships such as includes, extends, and associations to represent system functionality from a user perspective.
+
+```plantuml
+@startuml
+
+actor User
+actor Administrator
+
+usecase "View Introductory Movie" as UC1
+usecase "Skip Introductory Movie" as UC2
+usecase "Access Main Menu" as UC3
+usecase "Start Game" as UC4
+usecase "Access Educational Resources" as UC5
+usecase "View Help Section" as UC6
+usecase "Answer Questions" as UC7
+usecase "Receive Feedback" as UC8
+usecase "View Concluding Scene" as UC9
+usecase "Calculate Score" as UC10
+usecase "Retry or Exit Game" as UC11
+usecase "Update Questions" as UC12
+usecase "Access Math Umbrella" as UC13
+usecase "Ensure System Security" as UC14
+usecase "Conduct System Testing" as UC15
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC13
+
+Administrator --> UC12
+Administrator --> UC14
+Administrator --> UC15
+
+UC1 .> UC2 : <<extends>>
+UC3 .> UC4 : <<includes>>
+UC3 .> UC5 : <<includes>>
+UC3 .> UC6 : <<includes>>
+UC4 .> UC7 : <<includes>>
+UC7 .> UC8 : <<includes>>
+UC9 .> UC10 : <<includes>>
+UC10 .> UC11 : <<includes>>
+
+@enduml
+```
+
+This diagram represents the interactions between users and the Space Fractions system, highlighting the main functionalities and administrative capabilities. The use of `extends` and `includes` relationships helps to clarify optional and mandatory interactions within the system.

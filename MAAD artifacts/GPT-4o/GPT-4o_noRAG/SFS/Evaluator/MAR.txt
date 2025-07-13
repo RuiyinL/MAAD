@@ -1,0 +1,36 @@
+### Mismatch Analysis Report
+
+#### Mismatch 1: Flash Dependency
+- **Description**: The requirements specify that the Space Fractions system requires a web browser capable of running Flash movies. However, Flash is no longer supported by most modern web browsers as of 2021.
+- **Impact**: This dependency on Flash could render the system unusable for users with updated browsers, significantly limiting accessibility and user base.
+- **Recommendation**: Transition the system to use HTML5, CSS, and JavaScript for animations and interactive content. This will ensure compatibility with modern web standards and improve accessibility.
+
+#### Mismatch 2: Input Method Discrepancy
+- **Description**: The requirements state that input will consist entirely of mouse clicks, but the architectural design includes a "Question Engine" that processes fraction inputs as two integers (numerator and denominator).
+- **Impact**: This discrepancy could lead to confusion in the user interface design and implementation, potentially affecting user experience and system functionality.
+- **Recommendation**: Clarify the input method in the requirements. If integer inputs are necessary, update the requirements to reflect this, and ensure the user interface supports both mouse clicks and keyboard input for entering fractions.
+
+#### Mismatch 3: Security Considerations
+- **Description**: The requirements mention that the system will be as secure as the web browser, but the architectural design includes a "Security Module" and "User Authentication System."
+- **Impact**: This inconsistency could lead to inadequate security measures if the system relies solely on browser security without implementing additional security protocols.
+- **Recommendation**: Define specific security requirements in the SRS, such as data encryption, secure authentication, and protection against common web vulnerabilities. Ensure the architectural design aligns with these requirements.
+
+#### Mismatch 4: Real-Time Updates
+- **Description**: The requirements specify that the system allows for real-time updates of questions by an administrator, but the architectural design does not clearly outline how this is achieved.
+- **Impact**: Without a clear mechanism for real-time updates, administrators may face challenges in maintaining and updating educational content, affecting the system's adaptability and relevance.
+- **Recommendation**: Include a detailed description of the real-time update process in the architectural design, specifying the technologies and protocols used to achieve this functionality.
+
+#### Mismatch 5: Educational Resource Integration
+- **Description**: The requirements mention the integration of external educational resources through the "Math Umbrella," but the architectural design does not specify how these resources are accessed or integrated.
+- **Impact**: This gap could lead to incomplete or ineffective integration of educational resources, limiting the system's educational value.
+- **Recommendation**: Define the process and technologies for integrating external resources in the architectural design. Consider using APIs or web services to access and display external content seamlessly.
+
+#### Mismatch 6: System Testing and Reliability
+- **Description**: The requirements emphasize reliability through extensive testing, but the architectural design does not include a dedicated component or process for system testing.
+- **Impact**: Without a clear testing strategy, the system may face reliability issues, affecting user trust and satisfaction.
+- **Recommendation**: Incorporate a testing framework or module in the architectural design. Define testing procedures, including unit tests, integration tests, and user acceptance tests, to ensure system reliability and performance.
+
+By addressing these mismatches, the Space Fractions system can achieve better alignment between its requirements and architectural design, leading to a more robust, user-friendly, and effective educational tool.
+Mismatch count: 6
+Requirement count: 32
+Mismatch rate: 0.3

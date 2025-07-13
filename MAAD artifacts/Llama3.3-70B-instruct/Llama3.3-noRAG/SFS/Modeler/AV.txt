@@ -1,0 +1,438 @@
+To create the Logic View using PlantUML syntax, we will generate three diagrams: a Class Diagram, an Object Diagram, and a State Diagram. Each diagram will be structured to reflect the requirements and constraints provided.
+
+### Logical View:
+
+#### 1. Class Diagram
+The Class Diagram will focus on defining the main classes, their attributes, methods, and relationships.
+
+```plantuml
+@startuml
+class System {
+    +updateContent()
+    +secureAccess()
+    +manageUserSession()
+}
+
+class QuestionUpdater {
+    +updateQuestions()
+    +validateData()
+}
+
+class MathUmbrella {
+    +accessExternalProjects()
+    +organizeProjects()
+}
+
+class UserAuthentication {
+    +authenticateUser()
+    +lockInstance()
+}
+
+class WebBrowser {
+    +secureConnection()
+}
+
+System --> QuestionUpdater : uses
+System --> MathUmbrella : uses
+System --> UserAuthentication : uses
+System --> WebBrowser : uses
+
+@enduml
+```
+
+#### 2. Object Diagram
+The Object Diagram will show instances of the classes and their interactions in a specific scenario.
+
+```plantuml
+@startuml
+object systemInstance {
+    updateContent()
+    secureAccess()
+}
+
+object questionUpdaterInstance {
+    updateQuestions()
+    validateData()
+}
+
+object mathUmbrellaInstance {
+    accessExternalProjects()
+    organizeProjects()
+}
+
+object userAuthInstance {
+    authenticateUser()
+    lockInstance()
+}
+
+systemInstance -- questionUpdaterInstance
+systemInstance -- mathUmbrellaInstance
+systemInstance -- userAuthInstance
+
+@enduml
+```
+
+#### 3. State Diagram
+The State Diagram will represent the different states of a user session in the system and the transitions between these states.
+
+```plantuml
+@startuml
+[*] --> LoggedOut
+
+state LoggedOut {
+    [*] --> AwaitingLogin
+    AwaitingLogin --> LoggedIn : authenticateUser()
+}
+
+state LoggedIn {
+    [*] --> ActiveSession
+    ActiveSession --> ContentUpdate : updateContent()
+    ActiveSession --> SecureAccess : secureAccess()
+    ActiveSession --> LoggedOut : logout()
+}
+
+LoggedIn --> LoggedOut : logout()
+@enduml
+```
+
+These diagrams provide a clear and informative representation of the system's logic, capturing the key object-oriented principles and interactions as specified in the requirements.Development View:
+
+1 Package Diagram
+```plantuml
+@startuml
+package "Space Fractions System" {
+    package "Core" {
+        [Game Engine]
+        [User Interface]
+        [System Sequence]
+    }
+
+    package "Content Management" {
+        [Question Updater]
+        [Math Umbrella]
+    }
+
+    package "Security" {
+        [User Authentication]
+        [Secure Communication]
+    }
+
+    package "External Resources" {
+        [External S2S Projects]
+    }
+
+    package "Infrastructure" {
+        [Web Browser]
+        [Internet Connection]
+    }
+
+    [Game Engine] --> [User Interface]
+    [User Interface] --> [System Sequence]
+    [System Sequence] --> [Question Updater]
+    [System Sequence] --> [Math Umbrella]
+    [User Authentication] --> [Secure Communication]
+    [Secure Communication] --> [Web Browser]
+    [Web Browser] --> [Internet Connection]
+    [Math Umbrella] --> [External S2S Projects]
+}
+@enduml
+```
+
+2 Component Diagram
+```plantuml
+@startuml
+component "Game Engine" {
+    interface IGameLogic
+    interface IContentUpdate
+    [Game Engine] ..> IGameLogic
+    [Game Engine] ..> IContentUpdate
+}
+
+component "User Interface" {
+    interface IUserInteraction
+    [User Interface] ..> IUserInteraction
+}
+
+component "System Sequence" {
+    interface ISequenceControl
+    [System Sequence] ..> ISequenceControl
+}
+
+component "Question Updater" {
+    interface IQuestionManagement
+    [Question Updater] ..> IQuestionManagement
+}
+
+component "Math Umbrella" {
+    interface IResourceAccess
+    [Math Umbrella] ..> IResourceAccess
+}
+
+component "User Authentication" {
+    interface IAuthControl
+    [User Authentication] ..> IAuthControl
+}
+
+component "Secure Communication" {
+    interface ISecureProtocol
+    [Secure Communication] ..> ISecureProtocol
+}
+
+component "External S2S Projects" {
+    interface IExternalResource
+    [External S2S Projects] ..> IExternalResource
+}
+
+component "Web Browser" {
+    interface IWebAccess
+    [Web Browser] ..> IWebAccess
+}
+
+component "Internet Connection" {
+    interface INetworkAccess
+    [Internet Connection] ..> INetworkAccess
+}
+
+[Game Engine] --> [User Interface]
+[User Interface] --> [System Sequence]
+[System Sequence] --> [Question Updater]
+[System Sequence] --> [Math Umbrella]
+[User Authentication] --> [Secure Communication]
+[Secure Communication] --> [Web Browser]
+[Web Browser] --> [Internet Connection]
+[Math Umbrella] --> [External S2S Projects]
+@enduml
+```
+
+These diagrams represent the modular structure and high-level components of the Space Fractions system, illustrating the relationships and dependencies between different parts of the system.Process View:
+
+1. Activity Diagram
+```plantuml
+@startuml
+start
+
+:Initialize System;
+:Load Educational Material;
+
+repeat
+  :Check for New or Revised Material;
+  if (New Material Available?) then (yes)
+    :Update Game Sequence;
+  else (no)
+    :Continue Current Sequence;
+  endif
+repeat while (Material Update Required?)
+
+:Engage User in Game;
+:Monitor User Performance;
+
+if (Session End?) then (yes)
+  :Provide Personalized Ending;
+  :Offer Options to Revisit or Exit;
+else (no)
+  :Continue Game;
+endif
+
+stop
+@enduml
+```
+
+2. Sequence Diagram
+```plantuml
+@startuml
+participant User
+participant System
+participant QuestionUpdater
+participant MathUmbrella
+
+User -> System: Start Game
+System -> QuestionUpdater: Check for Updates
+QuestionUpdater -> System: Provide Updated Content
+System -> User: Load Game Sequence
+
+loop Game Session
+  User -> System: Interact with Game
+  System -> MathUmbrella: Access External Resources
+  MathUmbrella -> System: Provide Resource
+  System -> User: Display Resource
+end
+
+alt Session End
+  System -> User: Provide Personalized Ending
+  User -> System: Choose to Revisit or Exit
+else Continue
+  User -> System: Continue Game
+end
+
+@enduml
+```
+
+3. Collaboration Diagram
+```plantuml
+@startuml
+participant User
+participant System
+participant QuestionUpdater
+participant MathUmbrella
+
+User -> System: Start Game
+System -> QuestionUpdater: Check for Updates
+QuestionUpdater -> System: Provide Updated Content
+System -> User: Load Game Sequence
+
+User -> System: Interact with Game
+System -> MathUmbrella: Access External Resources
+MathUmbrella -> System: Provide Resource
+System -> User: Display Resource
+
+User -> System: End Session
+System -> User: Provide Personalized Ending
+User -> System: Choose to Revisit or Exit
+
+@enduml
+```
+
+These diagrams provide a clear representation of the processes and interactions within the system, adhering to the specified requirements and PlantUML syntax.To create the Physical View using PlantUML syntax, we will generate both a Deployment Diagram and a Container Diagram based on the provided requirements. These diagrams will illustrate the physical deployment of system components and the high-level software architecture, respectively.
+
+### Physical View:
+
+#### 1. Deployment Diagram
+The Deployment Diagram will model the physical deployment of system components across hardware nodes, showing servers, devices, execution environments, and their communication links.
+
+```plantuml
+@startuml
+node "User Device" {
+  [Web Browser]
+}
+
+node "S2S Server" {
+  [Space Fractions System]
+  [Question Updater]
+  [Math Umbrella]
+  [User Authentication]
+  [System Instance Management]
+}
+
+node "External Resources" {
+  [External S2S Projects]
+}
+
+[Web Browser] --> [Space Fractions System] : HTTP/HTTPS
+[Space Fractions System] --> [Question Updater]
+[Space Fractions System] --> [Math Umbrella]
+[Space Fractions System] --> [User Authentication]
+[Space Fractions System] --> [System Instance Management]
+[Math Umbrella] --> [External S2S Projects] : API/HTTP
+@enduml
+```
+
+#### 2. Container Diagram
+The Container Diagram will represent the high-level software architecture, including applications, databases, APIs, and their interactions. It will illustrate how containers (e.g., microservices, web servers) are structured within the system.
+
+```plantuml
+@startuml
+package "Space Fractions System" {
+  artifact "Web Application" {
+    [Main Game Sequence]
+    [Content Update Mechanism]
+  }
+  
+  artifact "Backend Services" {
+    [Question Updater Service]
+    [User Authentication Service]
+    [System Instance Management Service]
+  }
+  
+  artifact "External Integration" {
+    [Math Umbrella Service]
+  }
+}
+
+[Web Application] --> [Question Updater Service] : REST API
+[Web Application] --> [User Authentication Service] : REST API
+[Web Application] --> [System Instance Management Service] : REST API
+[Web Application] --> [Math Umbrella Service] : REST API
+[Math Umbrella Service] --> [External S2S Projects] : API/HTTP
+@enduml
+```
+
+These diagrams provide a clear and informative representation of the system's physical deployment and high-level software architecture, adhering to the specified requirements and PlantUML syntax conventions.```plantuml
+@startuml
+actor User
+actor Administrator
+
+usecase "Personalized Ending" as UC1
+usecase "Update Questions" as UC2
+usecase "Access Math Umbrella" as UC3
+usecase "Ensure System Security" as UC4
+usecase "Ensure System Availability" as UC5
+
+User --> UC1 : Play Game
+User --> UC3 : Explore Resources
+User --> UC5 : Access System
+
+Administrator --> UC2 : Modify Content
+Administrator --> UC4 : Manage Security
+
+UC2 --> UC5 : <<include>>
+UC3 --> UC5 : <<include>>
+UC4 --> UC5 : <<include>>
+@enduml
+```
+
+### Explanation:
+- **Actors**: The diagram includes two main actors: `User` and `Administrator`.
+- **Use Cases**: The use cases represent the main functionalities of the system:
+  - `Personalized Ending`: Users experience a personalized game ending.
+  - `Update Questions`: Administrators can update and modify questions.
+  - `Access Math Umbrella`: Users can explore external resources.
+  - `Ensure System Security`: Administrators manage security aspects.
+  - `Ensure System Availability`: Both users and administrators rely on system availability.
+- **Relationships**:
+  - `User` interacts with `Personalized Ending`, `Access Math Umbrella`, and `Ensure System Availability`.
+  - `Administrator` interacts with `Update Questions`, `Ensure System Security`, and `Ensure System Availability`.
+  - The `include` relationships indicate that ensuring system availability is a prerequisite for other functionalities.Architectural Decisions:
+
+1. **Real-time Content Update Mechanism**
+   - **Decision**: Implement a decoupled real-time content update mechanism.
+   - **Alternatives Considered**: Batch updates requiring system restarts vs. real-time updates.
+   - **Trade-offs**: Real-time updates enhance user experience by minimizing downtime but may increase system complexity and require robust error handling.
+   - **Rationale**: Aligns with ASR-001 and ASR-002, ensuring availability, performance efficiency, and scalability.
+
+2. **Secure Communication Protocols**
+   - **Decision**: Use secure communication protocols and encryption mechanisms.
+   - **Alternatives Considered**: Basic HTTP vs. HTTPS with encryption.
+   - **Trade-offs**: HTTPS provides better security at the cost of slightly increased latency.
+   - **Rationale**: Meets ASR-003 and NFR-006, ensuring security and confidentiality.
+
+3. **Single User Instance Locking Mechanism**
+   - **Decision**: Implement a locking mechanism to ensure single-user access per instance.
+   - **Alternatives Considered**: Allowing multiple concurrent users vs. single-user locking.
+   - **Trade-offs**: Single-user locking ensures data integrity but may limit accessibility.
+   - **Rationale**: Satisfies ASR-005, FR-004, and NFR-002, ensuring availability and security.
+
+4. **Integration with External Resources**
+   - **Decision**: Seamless integration with external S2S projects.
+   - **Alternatives Considered**: Manual linking vs. automated integration.
+   - **Trade-offs**: Automated integration offers a better user experience but requires more initial setup.
+   - **Rationale**: Supports ASR-004 and FR-003, enhancing availability and performance efficiency.
+
+5. **User-friendly Question Updater Interface**
+   - **Decision**: Develop an intuitive interface for the Question Updater.
+   - **Alternatives Considered**: Command-line interface vs. graphical user interface.
+   - **Trade-offs**: A graphical interface is more user-friendly but may require more resources to develop.
+   - **Rationale**: Aligns with FR-002 and DC-002, ensuring ease of use and maintainability.
+
+6. **Optimized Download and Load Times**
+   - **Decision**: Optimize download and load times for introductory and main menu movies.
+   - **Alternatives Considered**: High-quality large files vs. optimized smaller files.
+   - **Trade-offs**: Smaller files load faster but may compromise on quality.
+   - **Rationale**: Meets NFR-004, NFR-005, and DC-007, ensuring performance and responsiveness.
+
+7. **Reliability through Extensive Testing**
+   - **Decision**: Conduct extensive testing to ensure system reliability.
+   - **Alternatives Considered**: Minimal testing vs. comprehensive testing.
+   - **Trade-offs**: Comprehensive testing requires more resources but ensures higher reliability.
+   - **Rationale**: Supports NFR-007 and DC-009, ensuring reliability and maintainability.
+
+These architectural decisions are made to balance the system's functional and non-functional requirements while adhering to the design constraints. They provide a foundation for future adjustments and enhancements as the system evolves.

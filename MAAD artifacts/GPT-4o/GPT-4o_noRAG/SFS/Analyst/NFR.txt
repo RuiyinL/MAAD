@@ -1,0 +1,73 @@
+The Non-functional Requirements are:
+
+1. **[NFR-001]:**
+
+   - "The Space Fractions system requires a web browser capable of running Flash movies."
+
+   - [Related quality attribute(s)]: Compatibility
+
+2. **[NFR-002]:**
+
+   - "The Space Fractions system will not be dependent on any other software and is not a component of another program."
+
+   - [Related quality attribute(s)]: Independence, Modularity
+
+3. **[NFR-003]:**
+
+   - "The Space Fractions system does not require any new hardware."
+
+   - [Related quality attribute(s)]: Portability, Cost-effectiveness
+
+4. **[NFR-004]:**
+
+   - "The external interface will depend on the configuration of the browser. Therefore, various environments may yield different interfaces, but the behavior of the program will be the same."
+
+   - [Related quality attribute(s)]: Usability, Consistency
+
+5. **[NFR-005]:**
+
+   - "The Space Fractions system will run on any Internet-accessible computer with a web browser that supports Flash."
+
+   - [Related quality attribute(s)]: Accessibility, Compatibility
+
+6. **[NFR-006]:**
+
+   - "The systemplay will be dynamic and adaptive to provide different storylines based on the user's progress."
+
+   - [Related quality attribute(s)]: Adaptability, User Experience
+
+7. **[NFR-007]:**
+
+   - "The output timing is immediate, ensuring responsive gameplay."
+
+   - [Related quality attribute(s)]: Performance, Responsiveness
+
+8. **[NFR-008]:**
+
+   - "The system allows for real-time updates to the game's content without the need for system restarts or interruptions."
+
+   - [Related quality attribute(s)]: Maintainability, Flexibility
+
+9. **[NFR-009]:**
+
+   - "The Space Fractions system will be as secure as the web browser that will run the product."
+
+   - [Related quality attribute(s)]: Security
+
+10. **[NFR-010]:**
+
+    - "Reliability will be ensured by extensive testing by the team members and mentors, if available."
+
+    - [Related quality attribute(s)]: Reliability, Testability
+
+11. **[NFR-011]:**
+
+    - "Maintainability is a primary goal for this project."
+
+    - [Related quality attribute(s)]: Maintainability
+
+12. **[NFR-012]:**
+
+    - "The Space Fractions system will be available over the Internet via the S2S website."
+
+    - [Related quality attribute(s)]: Availability, Accessibility

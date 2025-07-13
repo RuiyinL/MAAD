@@ -1,0 +1,31 @@
+The ASRs are:
+
+1. [ASR-001]:
+- The system must provide a seamless integration of new or revised educational material into the game sequence without requiring system restarts or interruptions.
+- [Related quality attribute(s)]: Availability, Performance efficiency, Scalability
+- Architectural Impact: Real-time update mechanism is required to ensure minimal downtime and maximum user experience.
+- Related Components: Question Updater, System Sequence
+
+2. [ASR-002]:
+- The system must allow for real-time updates of the game's content without disrupting the user's engagement or learning experience.
+- [Related quality attribute(s)]: Availability, Performance efficiency, Scalability
+- Architectural Impact: Decoupling of content update mechanism from the main game sequence is required to ensure minimal downtime and maximum user experience.
+- Related Components: Question Updater, System Sequence
+
+3. [ASR-003]:
+- The system must provide a secure environment for users to access and download its content without compromising security or integrity.
+- [Related quality attribute(s)]: Security, Confidentiality
+- Architectural Impact: Secure communication protocols and encryption mechanisms are required to ensure data confidentiality and integrity.
+- Related Components: Web Browser, Internet Connection
+
+4. [ASR-004]:
+- The system must allow for easy access to a curated selection of external S2S projects that are specifically tailored to sixth graders.
+- [Related quality attribute(s)]: Availability, Performance efficiency
+- Architectural Impact: Integration with external resources and seamless navigation between internal and external content is required.
+- Related Components: Math Umbrella, External S2S Projects
+
+5. [ASR-005]:
+- The system must ensure that only one person can use a single instance of the Space Fractions system at any given time.
+- [Related quality attribute(s)]: Availability, Performance efficiency
+- Architectural Impact: Locking mechanism is required to prevent concurrent access and maintain data integrity.
+- Related Components: User Authentication, System Instance Management

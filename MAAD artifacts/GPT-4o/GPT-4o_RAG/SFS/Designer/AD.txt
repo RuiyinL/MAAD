@@ -1,0 +1,154 @@
+# Space Fractions System Architecture Document
+
+## 1. Goals
+
+The primary objectives of the Space Fractions system architecture are:
+
+- **Compatibility and Usability**: Ensure the system is compatible with web browsers that support Flash, providing a seamless user experience.
+- **Modularity and Independence**: Design the system as a standalone application, ensuring all functionalities are self-contained.
+- **Usability and User Experience**: Support real-time score calculation and ranking, enhancing user engagement.
+- **Flexibility and Maintainability**: Allow administrators to customize fraction questions without affecting core functionality.
+- **Portability and Accessibility**: Ensure cross-platform compatibility, allowing access from any Internet-accessible computer.
+- **Adaptability and User Experience**: Provide dynamic and adaptive storylines based on user progress.
+- **Availability and Accessibility**: Ensure high availability and accessibility via the S2S website.
+- **Reliability and Quality Assurance**: Implement comprehensive testing frameworks to ensure system reliability.
+
+## 2. Detailed Architecture Design
+
+### System Components and Modules
+
+- **User Interface (UI)**
+  - **Main Menu**: Displays options to start the game, access resources, or view help.
+  - **Introductory Movie**: Sets up the storyline, with an option to skip.
+  - **Help Section**: Provides basic instructions on system play.
+  - **Game Interface**: Facilitates user interaction during gameplay.
+
+- **Core System**
+  - **Scoring Engine**: Calculates and displays user scores.
+  - **Storyline Engine**: Generates and adapts storylines based on user performance.
+  - **Question Management System**: Manages and updates fraction questions.
+
+- **Web Browser Interface**
+  - **Flash Support**: Ensures compatibility with Flash-enabled browsers.
+  - **Browser Compatibility**: Adapts to various browser configurations.
+
+- **Administrative Interface**
+  - **Question Editor**: Allows administrators to update and edit questions.
+  - **Real-time Updates**: Ensures content updates without system interruptions.
+
+- **Network Infrastructure**
+  - **Web Server**: Hosts the Space Fractions system.
+  - **Network Configuration**: Ensures reliable connectivity and performance.
+
+- **Testing Framework**
+  - **Quality Assurance Tools**: Supports extensive testing for reliability.
+
+## 3. Component & Connector Specifications
+
+### Communication Protocols
+
+- **REST API Contracts**: Used for interactions between the UI and Core System, ensuring stateless communication and scalability.
+- **Event-Driven Messaging**: Utilized for real-time updates and dynamic content generation, supporting asynchronous communication.
+
+### Error-Handling Mechanisms
+
+- **Graceful Degradation**: Ensures the system continues to function with reduced capabilities in case of component failures.
+- **Retry Logic**: Implements automatic retries for transient errors in network communication.
+
+### Performance Thresholds
+
+- **Response Time**: UI interactions should have a response time of less than 200ms.
+- **Throughput**: The system should handle up to 100 concurrent users without performance degradation.
+
+## 4. Key Technologies
+
+### Infrastructure Configuration
+
+- **Web Server**: Apache or Nginx, configured for high availability and load balancing.
+- **Database**: MySQL or PostgreSQL, optimized for read-heavy operations.
+
+### Scalability and Fault-Tolerance Trade-offs
+
+- **Horizontal Scaling**: Add more servers to handle increased load, ensuring scalability.
+- **Redundancy**: Implement redundant components to enhance fault tolerance.
+
+## 5. Design Decisions
+
+### Chosen Design Patterns
+
+- **Model-View-Controller (MVC)**: Separates concerns, enhancing maintainability and scalability.
+- **Observer Pattern**: Supports dynamic content updates and real-time feedback.
+- **Singleton Pattern**: Ensures a single instance of the Scoring Engine for consistent score calculations.
+
+### Technology Selections
+
+- **Flash**: Chosen for its rich multimedia capabilities, despite its deprecation.
+- **HTML5**: Considered for future-proofing and broader compatibility.
+
+## 6. Design Decision Rationale
+
+### Justification of Technology Choices
+
+- **Flash**: Selected due to existing content and interactive multimedia requirements, despite its limitations.
+- **REST API**: Chosen for its simplicity, scalability, and statelessness, aligning with web-based architecture.
+
+### Pattern Adoption Explanation
+
+- **MVC**: Adopted to separate user interface, business logic, and data management, facilitating easier updates and maintenance.
+- **Observer Pattern**: Enables real-time updates and dynamic content adaptation, enhancing user engagement.
+
+## 7. Executable Prototype Skeleton
+
+### Code Scaffolding for Critical Modules
+
+```python
+# User Interface Module
+class UserInterface:
+    def display_main_menu(self):
+        pass
+
+    def display_intro_movie(self):
+        pass
+
+    def navigate_options(self):
+        pass
+
+# Scoring Engine Module
+class ScoringEngine:
+    def calculate_score(self):
+        pass
+
+    def display_score(self):
+        pass
+
+# Question Management System Module
+class QuestionManagementSystem:
+    def update_questions(self):
+        pass
+
+    def validate_questions(self):
+        pass
+
+# Storyline Engine Module
+class StorylineEngine:
+    def generate_storyline(self):
+        pass
+
+    def adapt_storyline(self):
+        pass
+
+# Web Browser Interface Module
+class WebBrowserInterface:
+    def check_flash_support(self):
+        pass
+
+# Administrative Interface Module
+class AdministrativeInterface:
+    def edit_questions(self):
+        pass
+
+    def save_questions(self):
+        pass
+```
+
+This document outlines the architecture of the Space Fractions system, detailing its components, interactions, and design decisions to ensure a robust, scalable, and user-friendly educational platform.

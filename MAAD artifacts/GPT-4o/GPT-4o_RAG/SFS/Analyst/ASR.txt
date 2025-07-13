@@ -1,0 +1,49 @@
+The ASRs are:
+
+1. **ASR-001**:
+   - Original text of ASR1: "The Space Fractions system requires a web browser capable of running Flash movies."
+   - Related quality attribute(s): Compatibility, Usability
+   - Architectural Impact: The system architecture must ensure compatibility with web browsers that support Flash, potentially limiting the choice of technologies and requiring fallback options for non-Flash environments.
+   - Related Components: User Interface, Web Browser Interface
+
+2. **ASR-002**:
+   - Original text of ASR2: "The Space Fractions system will not be dependent on any other software and is not a component of another program."
+   - Related quality attribute(s): Modularity, Independence
+   - Architectural Impact: The system must be designed as a standalone application, ensuring that all necessary functionalities are self-contained and do not rely on external software components.
+   - Related Components: Core System, User Interface
+
+3. **ASR-003**:
+   - Original text of ASR3: "The Space Fractions system will have an ending scene where the user's score is calculated and ranked, with an option to quit the system or try again."
+   - Related quality attribute(s): Usability, User Experience
+   - Architectural Impact: The architecture must support real-time score calculation and ranking, requiring efficient data processing and storage mechanisms.
+   - Related Components: Scoring Engine, User Interface
+
+4. **ASR-004**:
+   - Original text of ASR4: "The administrator of the Space Fractions system may wish to design a custom system complete with custom fraction questions."
+   - Related quality attribute(s): Flexibility, Maintainability
+   - Architectural Impact: The system must include a flexible question management module that allows administrators to easily update and customize questions without affecting the core system functionality.
+   - Related Components: Question Management System, Administrative Interface
+
+5. **ASR-005**:
+   - Original text of ASR5: "The Space Fractions system will run on any Internet-accessible computer with a web browser that supports Flash."
+   - Related quality attribute(s): Portability, Accessibility
+   - Architectural Impact: The system architecture must ensure cross-platform compatibility and accessibility, requiring a design that accommodates various operating systems and browser configurations.
+   - Related Components: User Interface, Web Browser Interface
+
+6. **ASR-006**:
+   - Original text of ASR6: "The systemplay will be dynamic and adaptive to provide different storylines based on the user's progress."
+   - Related quality attribute(s): Adaptability, User Experience
+   - Architectural Impact: The architecture must support dynamic content generation and adaptive storyline progression, necessitating a flexible content management system.
+   - Related Components: Storyline Engine, User Interface
+
+7. **ASR-007**:
+   - Original text of ASR7: "The Space Fractions system will be available over the Internet via the S2S website."
+   - Related quality attribute(s): Availability, Accessibility
+   - Architectural Impact: The system must be designed for high availability and accessibility, requiring robust hosting solutions and reliable network infrastructure.
+   - Related Components: Web Server, Network Infrastructure
+
+8. **ASR-008**:
+   - Original text of ASR8: "Reliability will be ensured by extensive testing by the team members and mentors, if available."
+   - Related quality attribute(s): Reliability, Quality Assurance
+   - Architectural Impact: The architecture must include comprehensive testing frameworks and processes to ensure system reliability and performance under various conditions.
+   - Related Components: Testing Framework, Quality Assurance Tools

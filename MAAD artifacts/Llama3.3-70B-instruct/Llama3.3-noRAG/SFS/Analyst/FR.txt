@@ -1,0 +1,25 @@
+Here is a concise summary of the functional requirements (FR) outlined in the provided software requirements document:
+
+"The functional requirements are:
+
+1. [FR-001] Personalized Ending
+	* Task 1: Offer a personalized ending that varies from one session to another based on the player's performance.
+	* Task 2: Provide a clear and direct pathway for the player to either revisit the game's content through the main menu or gracefully exit the game, thereby closing their current session.
+
+2. [FR-002] Question Updater
+	* Task 1: Facilitate the updating and editing of questions within the system sequence.
+	* Task 2: Ensure that the game's educational content remains current, accurate, and engaging for players through an easy-to-use interface for content modification.
+	* Task 3: Validate submitted data to ensure completeness and contextual relevance to the game's educational objectives.
+
+3. [FR-003] Math Umbrella
+	* Task 1: Provide players with easy access to a curated selection of external S2S projects that are specifically tailored to sixth graders.
+	* Task 2: Organize these projects by mathematical topics, such as fractions, to complement and enhance the learning experience within the game.
+	* Task 3: Allow players to choose which external resources they wish to explore based on their interests or areas where they seek further understanding.
+
+4. [FR-004] System Security
+	* Task 1: Ensure that only one person can use a single instance of the Space Fractions system.
+	* Task 2: Provide secure access to the system over the Internet via the S2S website, with reliability ensured through extensive testing by the team members and mentors.
+
+5. [FR-005] System Availability
+	* Task 1: Make the Space Fractions system available over the Internet via the S2S website.
+	* Task 2: Ensure that the system can be played within a few minutes with a regular modem connection to the Internet, due to the relatively small size of the introductory and main menu movies."

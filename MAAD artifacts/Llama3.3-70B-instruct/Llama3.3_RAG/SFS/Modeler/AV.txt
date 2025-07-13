@@ -1,0 +1,321 @@
+Logical View:
+### 1 Class Diagram
+```plantuml
+@startuml
+class SpaceFractionsSystem {
+  - score: int
+  - questions: List[Question]
+  + calculateScore(): int
+  + displayQuestions(): void
+}
+
+class Question {
+  - text: String
+  - options: List[String]
+  - correctAnswer: String
+  + getOptions(): List[String]
+  + isCorrect(answer: String): boolean
+}
+
+class User {
+  - name: String
+  - score: int
+  + submitAnswer(answer: String): void
+}
+
+class Administrator {
+  - name: String
+  + updateQuestions(questions: List[Question]): void
+}
+
+SpaceFractionsSystem --* Question
+SpaceFractionsSystem --* User
+Administrator --* SpaceFractionsSystem
+@enduml
+```
+
+### 2 Object Diagram
+```plantuml
+@startuml
+object spaceFractionsSystem {
+  - score = 0
+  - questions = [question1, question2, question3]
+}
+
+object question1 {
+  - text = "What is 1/2 + 1/2?"
+  - options = ["0", "1", "2"]
+  - correctAnswer = "1"
+}
+
+object question2 {
+  - text = "What is 1/4 + 1/4?"
+  - options = ["0", "1/2", "1"]
+  - correctAnswer = "1/2"
+}
+
+object user1 {
+  - name = "John"
+  - score = 0
+}
+
+spaceFractionsSystem -- question1
+spaceFractionsSystem -- question2
+spaceFractionsSystem -- user1
+@enduml
+```
+
+### 3 State Diagram
+```plantuml
+@startuml
+state Start
+state QuestionDisplayed
+state AnswerSubmitted
+state ScoreCalculated
+state GameOver
+
+[*] --> Start
+Start --> QuestionDisplayed: startGame()
+QuestionDisplayed --> AnswerSubmitted: submitAnswer()
+AnswerSubmitted --> ScoreCalculated: calculateScore()
+ScoreCalculated --> GameOver: gameOver()
+GameOver --> [*]: exitGame()
+
+state QuestionDisplayed {
+  [*] --> DisplayingQuestion
+  DisplayingQuestion --> WaitingForAnswer: wait()
+  WaitingForAnswer --> [*]: receiveAnswer()
+}
+
+state AnswerSubmitted {
+  [*] --> CheckingAnswer
+  CheckingAnswer --> Correct: isCorrect()
+  CheckingAnswer --> Incorrect: isIncorrect()
+  Correct --> ScoreCalculated
+  Incorrect --> QuestionDisplayed
+}
+@enduml
+```Development View:
+1. Package Diagram
+```plantuml
+@startuml
+package "Space Fractions System" as sf {
+  package "User Interface" as ui
+  package "Web Browser Interface" as wbi
+  package "Core System" as cs
+  package "Scoring Engine" as se
+  package "Question Management System" as qms
+  package "Administrative Interface" as ai
+}
+
+sf --* ui
+sf --* wbi
+sf --* cs
+cs --* se
+cs --* qms
+cs --* ai
+@enduml
+```
+
+2. Component Diagram
+```plantuml
+@startuml
+component "User Interface" as ui
+component "Web Browser Interface" as wbi
+component "Core System" as cs
+component "Scoring Engine" as se
+component "Question Management System" as qms
+component "Administrative Interface" as ai
+
+ui -->> wbi : uses
+wbi -->> cs : uses
+cs -->> se : uses
+cs -->> qms : uses
+cs -->> ai : uses
+ai -->> qms : updates
+se -->> cs : provides score
+qms -->> cs : provides questions
+@enduml
+```
+Note: The above diagrams represent the high-level structure and components of the Space Fractions System, as inferred from the provided requirements. The Package Diagram shows the organization of the system into packages, while the Component Diagram illustrates the dependencies and interactions between the components.Process View:
+### 1 Activity Diagram
+```plantuml
+@startuml
+start
+:User interacts with system;
+if (User requests to play game?) then (yes)
+  :System displays introductory movie;
+  :System presents main menu;
+  :User selects option to start game;
+  :System generates fraction questions;
+  :User answers questions;
+  if (User answers correctly?) then (yes)
+    :System provides feedback and updates score;
+  else (no)
+    :System provides feedback and updates score;
+  endif
+  :System displays concluding scene with score;
+else (no)
+  :System displays educational resources;
+endif
+stop
+@enduml
+```
+
+### 2 Sequence Diagram
+```plantuml
+@startuml
+participant User as "User"
+participant System as "System"
+participant QuestionManager as "Question Manager"
+participant ScoringEngine as "Scoring Engine"
+
+User->>System: Request to play game
+System->>User: Display introductory movie
+System->>User: Present main menu
+User->>System: Select option to start game
+System->>QuestionManager: Generate fraction questions
+QuestionManager->>System: Return questions
+System->>User: Present questions
+User->>System: Answer questions
+System->>ScoringEngine: Update score
+ScoringEngine->>System: Return updated score
+System->>User: Display concluding scene with score
+@enduml
+```
+
+### 3 Collaboration Diagram
+```plantuml
+@startuml
+participant User as "User" #pink
+participant System as "System" #lightblue
+participant QuestionManager as "Question Manager" #yellow
+participant ScoringEngine as "Scoring Engine" #green
+participant EducationalResources as "Educational Resources" #orange
+
+User->>System: requestGame()
+System->>QuestionManager: generateQuestions()
+QuestionManager->>System: returnQuestions(questions)
+System->>User: displayQuestions(questions)
+User->>System: answerQuestions(answers)
+System->>ScoringEngine: updateScore(answers)
+ScoringEngine->>System: returnUpdatedScore(score)
+System->>User: displayConcludingScene(score)
+User->>System: requestEducationalResources()
+System->>EducationalResources: displayResources()
+@enduml
+```Physical View:
+1 Deployment Diagram
+```plantuml
+@startuml
+node "Web Server" as web_server
+node "Database Server" as db_server
+node "Client Browser" as client_browser
+node "Network Infrastructure" as network_infrastructure
+
+web_server -- db_server
+web_server -- network_infrastructure
+client_browser -- network_infrastructure
+client_browser -- web_server
+
+artifact "Space Fractions System" as space_fractions_system
+web_server -- space_fractions_system
+db_server -- space_fractions_system
+
+@enduml
+```
+
+2 Container Diagram
+```plantuml
+@startuml
+artifact "Web Server" as web_server
+artifact "Space Fractions System" as space_fractions_system
+artifact "Database" as database
+artifact "User Interface" as user_interface
+artifact "Scoring Engine" as scoring_engine
+artifact "Question Management System" as question_management_system
+artifact "Administrative Interface" as administrative_interface
+
+web_server -- space_fractions_system
+space_fractions_system -- database
+space_fractions_system -- user_interface
+space_fractions_system -- scoring_engine
+space_fractions_system -- question_management_system
+space_fractions_system -- administrative_interface
+
+@enduml
+```
+Note: The provided PlantUML syntax is correct and represents the physical view of the system, including the deployment diagram and container diagram. The deployment diagram shows the physical deployment of system components across hardware nodes, while the container diagram represents the high-level software architecture, including applications, databases, APIs, and their interactions.Scenario View:
+1 Use Case Diagram
+```plantuml
+@startuml
+left to right direction
+
+actor User as "End User"
+actor Administrator as "System Administrator"
+
+usecase "Play Game" as (Play Game)
+usecase "View Educational Resources" as (View Educational Resources)
+usecase "Update Questions" as (Update Questions)
+usecase "View Score" as (View Score)
+
+User -- (Play Game)
+User -- (View Educational Resources)
+User -- (View Score)
+
+Administrator -- (Update Questions)
+
+(Play Game)..> (View Educational Resources) : includes
+(Play Game)..> (View Score) : extends
+
+artifact "Space Fractions System" as "System"
+(System) -- (Play Game)
+(System) -- (View Educational Resources)
+(System) -- (Update Questions)
+(System) -- (View Score)
+
+@enduml
+```
+This Use Case Diagram illustrates how users interact with the Space Fractions system. The End User can play the game, view educational resources, and view their score. The System Administrator can update questions. The system itself is represented as an artifact and is associated with all the use cases. The "includes" and "extends" relationships are used to show the interactions between the use cases.Architectural Decisions:
+
+1. **Decision:** Utilize a web-based architecture to ensure accessibility via a web browser that supports Flash movies.
+   - **Rationale:** This decision satisfies ASR-001, ASR-005, and NFR-001, which require the system to be accessible on any Internet-accessible computer with a web browser that supports Flash.
+   - **Trade-offs:** The use of Flash may limit compatibility with certain devices or browsers that do not support Flash, but it allows for interactive content as required by FR-002.
+
+2. **Decision:** Design the system as a standalone application to ensure independence and modularity.
+   - **Rationale:** This decision aligns with ASR-002 and NFR-002, emphasizing the system's independence and modularity.
+   - **Trade-offs:** Being a standalone application might increase development complexity but ensures the system can operate without dependencies on other software.
+
+3. **Decision:** Implement a flexible question management module for administrators to update and customize questions.
+   - **Rationale:** This decision satisfies ASR-004 and FR-004, which require flexibility and maintainability in managing educational content.
+   - **Trade-offs:** Developing a flexible question management system may add complexity but enhances the system's maintainability and adaptability to changing educational needs.
+
+4. **Decision:** Use a dynamic content generation approach to support adaptive storyline progression based on user performance.
+   - **Rationale:** This decision supports ASR-006 and FR-002, which require the system to adapt its storyline based on user progress.
+   - **Trade-offs:** Dynamic content generation can increase system complexity and require more sophisticated development, but it significantly enhances user experience and engagement.
+
+5. **Decision:** Ensure cross-platform compatibility and accessibility by designing the system to run on any Internet-accessible computer with a web browser that supports Flash.
+   - **Rationale:** This decision satisfies ASR-005 and NFR-005, emphasizing the need for portability and accessibility.
+   - **Trade-offs:** Achieving cross-platform compatibility may require additional testing and development efforts but is crucial for meeting the system's accessibility requirements.
+
+6. **Decision:** Incorporate comprehensive testing frameworks and processes to ensure system reliability and performance under various conditions.
+   - **Rationale:** This decision aligns with ASR-008 and NFR-007, which highlight the importance of reliability and testability.
+   - **Trade-offs:** Extensive testing may prolong the development cycle but is essential for ensuring the system meets its quality attribute requirements.
+
+7. **Decision:** Prioritize maintainability in the system design to facilitate ease of updates and modifications to educational content.
+   - **Rationale:** This decision supports NFR-008 and DC-010, emphasizing maintainability as a primary goal.
+   - **Trade-offs:** Focusing on maintainability may influence design choices, potentially adding complexity or requiring additional resources, but it ensures the system remains adaptable and efficient over time.
+
+8. **Decision:** Implement a user-friendly interface for administrators to update and edit questions, ensuring educational content remains current and accurate.
+   - **Rationale:** This decision satisfies FR-004 and DC-009, which require an administrative interface for content management.
+   - **Trade-offs:** Developing a user-friendly administrative interface may require additional design and development efforts but is critical for the system's maintainability and the quality of its educational content.
+
+9. **Decision:** Ensure the system's security standards are equivalent to those of the web browser used to access it.
+   - **Rationale:** This decision aligns with DC-005, which requires the system to maintain security standards.
+   - **Trade-offs:** Depending on the web browser's security features may limit the system's ability to implement additional security measures, but it ensures a baseline level of security for users.
+
+10. **Decision:** Design the system to support real-time updates to the game's content without requiring system restarts or interruptions.
+    - **Rationale:** This decision satisfies DC-006, which requires real-time updates without system interruptions.
+    - **Trade-offs:** Implementing real-time update capabilities may add complexity to the system's architecture and require more sophisticated content management, but it enhances the system's usability and maintainability.
+
+These architectural decisions are made in response to the provided requirements and constraints, balancing the needs for functionality, quality attributes, and maintainability. They provide a foundation for the system's design, ensuring it meets the specified requirements while being adaptable to future changes and enhancements.

@@ -1,0 +1,29 @@
+The Non-functional Requirements are:
+
+1. [NFR-001]:
+- The system will be available over the Internet via the S2S website.
+- Availability
+
+2. [NFR-002]:
+- Only one person can use a single instance of the Space Fractions system.
+- Security, Isolation
+
+3. [NFR-003]:
+- The Space Fractions system will reside on the Internet so more than one user can access the product and download its content for use on their computer.
+- Availability, Scalability
+
+4. [NFR-004]:
+- Due to the relatively small size of the introductory and main menu movies, they can be downloaded in approximately one minute with a modem connection.
+- Performance, Responsiveness
+
+5. [NFR-005]:
+- Because Flash movies do not have to be fully downloaded to play, the main system can be played within a few minutes with a regular modem connection to the Internet.
+- Performance, Responsiveness
+
+6. [NFR-006]:
+- The Space Fractions system will be as secure as the web browser that will run the product.
+- Security
+
+7. [NFR-007]:
+- Reliability will be ensured by extensive testing by the team members and mentors, if available.
+- Reliability
