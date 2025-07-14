@@ -1,0 +1,532 @@
+Logical View:
+
+1 Class Diagram  
+[PlantUML]
+@startuml
+class PhysicsEngine {
+    +calculateVelocity(fraction: float): void
+    +updateSpaceshipPosition(): void
+}
+
+class InputProcessingModule {
+    +validateFraction(numerator: int, denominator: int): bool
+    +convertToDecimal(fraction: str): float
+    +displayErrorMessage(): void
+}
+
+class AdminInterface {
+    -authToken: string
+    +authenticateAdmin(password: str): bool
+    +launchQuestionEditor(): void
+    +saveUpdates(): void
+}
+
+class StorylineEngine {
+    +evaluateUserResponse(answer: str): void
+    +loadDynamicPath(): void
+    +generateNarrative(): str
+}
+
+class QuestionRepository {
+    -questions: list
+    +addQuestion(question: dict): void
+    +validateQuestion(): bool
+}
+
+class IntroductoryMovieModule {
+    +playMovie(): void
+    +stopMovie(): void
+    +checkSkipRequest(): bool
+}
+
+class LocalStorageManager {
+    +storeScore(score: int): void
+    +retrieveScore(): int
+    +validateData(): bool
+}
+
+PhysicsEngine --> InputProcessingModule : uses
+InputProcessingModule --> LocalStorageManager : «uses»
+AdminInterface --> QuestionRepository : manages
+StorylineEngine --> QuestionRepository : «depends»
+IntroductoryMovieModule --> StateManager : triggers
+StateManager --> MainMenuModule : transitions to
+@enduml
+2 Object Diagram  
+[PlantUML]
+@startuml
+object adminInterface1 {
+    authenticateAdmin()
+    launchQuestionEditor()
+    saveUpdates()
+}
+
+object questionRepo1 {
+    addQuestion()
+    validateQuestion()
+}
+
+object physicsEngine1 {
+    calculateVelocity()
+    updateSpaceshipPosition()
+}
+
+object inputModule1 {
+    validateFraction()
+    convertToDecimal()
+}
+
+adminInterface1 --> questionRepo1 : manages
+physicsEngine1 --> inputModule1 : uses
+
+note top of adminInterface1
+Scenario: Admin updates question Q42
+- Authenticates via password
+- Adds new question via editor
+- Validates and saves to repository
+end note
+@enduml
+
+3 State Diagram  
+[PlantUML]
+@startuml
+[*] --> Idle : Initialization
+Idle --> Playing : onSystemStart / playMovie()
+Playing --> Skipped : onMouseClick / stopMovie() \n logSkipEvent()
+Playing --> Completed : onMovieEnd / stopMovie() \n triggerMenuTransition()
+Skipped --> [*] : onExit
+Completed --> [*] : onExit / transitionToMainMenu()
+@enduml
+
+Development View:
+
+1 Package Diagram
+[PlantUML]
+@startuml
+package "Flash Integration" {
+  [Flash Player Module]
+  [Browser Compatibility Layer]
+}
+
+package "Admin Interface" {
+  [Authentication Module]
+  [Web Form Handler]
+  [Data Validation]
+}
+
+package "Physics Engine" {
+  [Input Processor]
+  [Velocity Calculator]
+  [Rendering Adapter]
+}
+
+package "Storyline Engine" {
+  [Decision Tree Manager]
+  [Narrative Generator]
+  [Content Loader]
+}
+
+package "Math Umbrella" {
+  [Link Dispatcher]
+  [External API Gateway]
+  [Security Sandbox]
+}
+
+package "Core Modules" {
+  [State Manager]
+  [Event Handler]
+  [Local Storage]
+  [Score Calculator]
+}
+
+package "Testing & Compatibility" {
+  [Cross-Browser Test Suite]
+  [Load Testing Framework]
+  [Fault Injection Module]
+}
+
+[Flash Integration] --> [Core Modules]
+[Admin Interface] --> [Core Modules]
+[Physics Engine] --> [Core Modules]
+[Storyline Engine] --> [Core Modules]
+[Math Umbrella] --> [Core Modules]
+[Testing & Compatibility] --> [Flash Integration]
+[Testing & Compatibility] --> [Physics Engine]
+[Admin Interface] ..> [Data Validation]
+[Physics Engine] ..> [Rendering Adapter]
+[Storyline Engine] ..> [Content Loader]
+@enduml
+```
+
+2 Component Diagram
+[PlantUML]
+@startuml
+artifact "Browser Client" as BC {
+  [UI Controller]
+  [Flash Player]
+  [Input Validator]
+}
+
+artifact "Web Server" as WS {
+  [Content Delivery]
+  [Admin API]
+  [Session Manager]
+}
+
+artifact "Database/File Storage" as DB {
+  [Questions Repository]
+  [Storyline Configs]
+}
+
+artifact "External Resources" as ER {
+  [S2S Projects]
+  [Educational APIs]
+}
+
+artifact "Testing Framework" as TF {
+  [Load Balancer Sim]
+  [Compatibility Checker]
+}
+
+BC --> WS : HTTP Requests
+WS --> DB : Data Persistence
+WS --> ER : API Calls
+TF --> WS : Test Scenarios
+TF --> BC : UI Automation
+
+interface "IPhysicsEngine" as PE
+interface "IStorylineEngine" as SE
+interface "IAdminAPI" as AA
+
+[UI Controller] -- PE
+[Content Delivery] -- SE
+[Admin API] -- AA
+
+PE - [Velocity Calculator]
+SE - [Narrative Generator]
+AA - [Web Form Handler]
+
+note right of PE: Handles real-time\nvelocity calculations
+note left of SE: Manages adaptive\nstoryline paths
+note bottom of AA: Secured question\nupdate interface
+@enduml
+``````plantuml
+@startuml
+start
+:User inputs fraction (numerator/denominator);
+if (Denominator zero?) then (yes)
+    :Display error message;
+    :Prompt re-entry;
+    stop
+else (no)
+    if (Non-integer values?) then (yes)
+        :Display error message;
+        :Prompt re-entry;
+        stop
+    else (no)
+        :Convert fraction to decimal;
+        :Update spaceship velocity;
+        :Render updated velocity;
+        stop
+    endif
+endif
+@enduml
+```
+
+```plantuml
+@startuml
+actor User
+participant IntroductoryMovieModule
+participant EventHandler
+participant StateManager
+participant MainMenuModule
+
+User -> IntroductoryMovieModule : auto-plays movie
+activate IntroductoryMovieModule
+
+User -> EventHandler : mouse click (skip)
+activate EventHandler
+EventHandler -> IntroductoryMovieModule : stopPlayback()
+EventHandler -> StateManager : transitionToMainMenu()
+activate StateManager
+StateManager -> MainMenuModule : displayMenu()
+activate MainMenuModule
+MainMenuModule --> User : shows menu
+@enduml
+```
+
+```plantuml
+@startuml
+participant Admin
+participant AdminInterface
+participant BackendServer
+participant FileStorageSystem
+participant DataValidator
+
+Admin -> AdminInterface : submitQuestion(formData)
+activate AdminInterface
+
+AdminInterface -> BackendServer : saveQuestionRequest(data)
+activate BackendServer
+
+BackendServer -> DataValidator : validateCompleteness(data)
+activate DataValidator
+
+alt validation passed
+    DataValidator --> BackendServer : valid
+    deactivate DataValidator
+
+    BackendServer -> FileStorageSystem : storeQuestion(data)
+    activate FileStorageSystem
+    FileStorageSystem --> BackendServer : stored
+    deactivate FileStorageSystem
+
+    BackendServer --> AdminInterface : success
+else validation failed
+    DataValidator --> BackendServer : invalid
+    deactivate DataValidator
+
+    BackendServer --> AdminInterface : error(reasons)
+end
+
+deactivate BackendServer
+AdminInterface --> Admin : confirmation or error
+deactivate AdminInterface
+@enduml
+```Physical View:
+1 Deployment Diagram
+[PlantUML]
+@startuml
+!pragma layout smetana
+
+node "Client Device" as client {
+  [Browser (Flash Support)]
+  [Local Storage]
+  [Physics Engine]
+}
+
+node "Web Server" as server {
+  [Content Delivery Server]
+  [Admin Interface]
+  [Backend Server]
+  [File Storage System]
+}
+
+node "Database Server" as db {
+  [Question Repository]
+  [Storyline Content]
+}
+
+node "External Services" as ext {
+  [S2S Resources]
+  [Educational APIs]
+}
+
+client --> server : HTTP/HTTPS\n(Flash Content)
+server --> db : Database Connection\n(MySQL/PostgreSQL)
+server --> ext : API Calls\n(HTTPS)
+client --> ext : External Links\n(New Window)
+server --> server : Load Balancer\n(Internal)
+@enduml
+2 Container Diagram
+[PlantUML]
+@startuml
+!pragma layout smetana
+
+package "Web Browser" as browser {
+  component "Flash Player Integration"
+  component "Game Interface"
+  component "Local Storage Manager"
+  component "Event Handler"
+}
+
+package "Web Application Server" as app {
+  component "Physics Engine"
+  component "Storyline Engine"
+  component "Admin Interface"
+  component "Security Gateway"
+  component "Content Delivery"
+}
+
+package "Database" as database {
+  component "Questions"
+  component "User Progress"
+  component "Narrative Paths"
+}
+
+package "File Storage" as files {
+  component "Flash Movies"
+  component "System Configs"
+}
+
+package "External APIs" as apis {
+  component "S2S Math Resources"
+  component "Educational Content"
+}
+
+browser --> app : HTTP Requests\n(Gameplay, Admin)
+app --> database : CRUD Operations\n(Questions/Progress)
+app --> files : Read/Write\n(Configs & Content)
+app --> apis : API Integration\n(HTTPS)
+browser --> apis : Direct Links\n(New Window)
+app --> app : Load Balancer\n(Internal Routing)
+@enduml
+```Scenario View:
+1 Use Case Diagram
+[PlantUML]
+@startuml
+left to right direction
+actor User
+actor Administrator
+actor "External Educational Resources" as External
+
+rectangle "Space Fractions System" {
+    (Start System) as UC1
+    (Play Introductory Movie) as UC2
+    (Skip Movie) as UC3
+    (Display Main Menu) as UC4
+    (Access Help) as UC5
+    (Visit External Resources) as UC6
+    (Start Game) as UC7
+    (Answer Fraction Questions) as UC8
+    (Display Score) as UC9
+    (Update Questions) as UC10
+    (Authenticate) as UC11
+    (Open External Project) as UC12
+
+    UC1 --> UC2 : <<include>>
+    UC3 -.-> UC2 : <<extend>>
+    UC1 --> UC4 : <<include>>
+    UC4 --> UC5 : <<include>>
+    UC4 --> UC6 : <<include>>
+    UC4 --> UC7 : <<include>>
+    UC7 --> UC8 : <<include>>
+    UC7 --> UC9 : <<include>>
+    UC10 --> UC11 : <<include>>
+    UC6 --> UC12 : <<include>>
+}
+
+User --> UC1
+User --> UC4
+User --> UC7
+User --> UC9
+Administrator --> UC10
+External <-- UC12
+@enduml
+@enduml**Architectural Decisions**
+
+1. **Decision: Client-Side Flash Dependency for Cross-Browser Compatibility**  
+   - **Addressed Requirements**: ASR-001, NFR-001, DC-001, DC-007  
+   - **Decision**: Use Adobe Flash for core animations and interactions, with a browser compatibility layer to ensure uniform behavior across platforms.  
+   - **Alternatives Considered**:  
+     - Migrate to HTML5/WebGL for modern browser support.  
+     - Use a hybrid approach (Flash fallback for older browsers).  
+   - **Trade-offs**:  
+     - **Pros**: Meets immediate compatibility requirements; aligns with existing Flash-based design constraints.  
+     - **Cons**: Flash is deprecated, poses security risks (NFR-004), and limits future scalability.  
+   - **Reasoning**: Stakeholder constraints (DC-001) and legacy requirements (ASR-001) mandate Flash. A roadmap for future migration to HTML5 was deferred due to time/resource constraints.  
+
+2. **Decision: Client-Side Physics Engine for Real-Time Processing**  
+   - **Addressed Requirements**: ASR-003, FR-007, NFR-003, DC-014  
+   - **Decision**: Implement a client-side physics engine to handle fraction-to-velocity calculations, minimizing server dependency.  
+   - **Alternatives Considered**:  
+     - Server-side computation for accuracy.  
+     - Hybrid model (client for UI, server for validation).  
+   - **Trade-offs**:  
+     - **Pros**: Reduces latency (supports real-time responsiveness); aligns with DC-014 (real-time validation).  
+     - **Cons**: Limits computational complexity due to client hardware variability (DC-003).  
+   - **Reasoning**: Prioritized user experience (ASR-003) and performance (NFR-003) over centralized control. Input validation ensures data integrity (NFR-009).  
+
+3. **Decision: Modular, Browser-Native Security Model**  
+   - **Addressed Requirements**: ASR-004, ASR-006, NFR-004, DC-009  
+   - **Decision**: Rely on browser-native security features (e.g., sandboxing, CORS) for admin interfaces (ASR-004) and external resource access (ASR-006).  
+   - **Alternatives Considered**:  
+     - Custom authentication/authorization layers.  
+     - Third-party security frameworks.  
+   - **Trade-offs**:  
+     - **Pros**: Simplifies development (DC-009); avoids over-engineering.  
+     - **Cons**: Limited protection against browser-specific vulnerabilities.  
+   - **Reasoning**: Aligns with DC-009 (no additional security layers) and stakeholder prioritization of maintainability (ASR-010).  
+
+4. **Decision: Client-Side Score Storage with Validation**  
+   - **Addressed Requirements**: ASR-008, DC-005, NFR-009  
+   - **Decision**: Use `localStorage` for score persistence, coupled with checksum-based validation to prevent tampering.  
+   - **Alternatives Considered**:  
+     - Server-side storage for centralized control.  
+     - Encrypted cookies.  
+   - **Trade-offs**:  
+     - **Pros**: Meets portability (ASR-008) and hardware constraints (DC-003).  
+     - **Cons**: Vulnerable to client-side manipulation (mitigated via validation).  
+   - **Reasoning**: Balances data integrity (NFR-009) with the need for offline functionality (DC-005).  
+
+5. **Decision: Distributed Web Architecture with Load Balancing**  
+   - **Addressed Requirements**: ASR-002, NFR-010, DC-010  
+   - **Decision**: Deploy a load-balanced, redundant server setup to ensure availability and scalability.  
+   - **Alternatives Considered**:  
+     - Single-server deployment.  
+     - Serverless architecture (e.g., AWS Lambda).  
+   - **Trade-offs**:  
+     - **Pros**: Supports concurrent users (NFR-010); aligns with ASR-002’s reliability goals.  
+     - **Cons**: Higher infrastructure costs.  
+   - **Reasoning**: Critical for internet hosting (NFR-008) and scalability (ASR-002).  
+
+6. **Decision: Dynamic Narrative Engine with Decision Trees**  
+   - **Addressed Requirements**: ASR-007, DC-011, FR-003.4  
+   - **Decision**: Use a decision-tree-based narrative engine to adapt storylines based on user responses.  
+   - **Alternatives Considered**:  
+     - Predefined linear story paths.  
+     - Machine learning-driven adaptation.  
+   - **Trade-offs**:  
+     - **Pros**: Flexible content updates (DC-008); meets adaptability goals (ASR-007).  
+     - **Cons**: Increased content authoring complexity.  
+   - **Reasoning**: Aligns with educational objectives (FR-003) and modifiability (ASR-010).  
+
+7. **Decision: Asynchronous Media Handling for User Interruptions**  
+   - **Addressed Requirements**: ASR-005, DC-013, FR-001.2  
+   - **Decision**: Implement event-driven media playback interruption (e.g., skipping intro movie) with state transition management.  
+   - **Alternatives Considered**:  
+     - Synchronous playback with forced delays.  
+   - **Trade-offs**:  
+     - **Pros**: Enhances usability (NFR-007); meets DC-013’s skip requirement.  
+     - **Cons**: Requires robust state management to avoid UI inconsistencies.  
+   - **Reasoning**: Prioritized user experience (ASR-005) over simplicity of implementation.  
+
+8. **Decision: Simplified Admin Interface with Server-File Integration**  
+   - **Addressed Requirements**: ASR-004, DC-006, DC-015  
+   - **Decision**: Use web forms (DC-006) to update questions, saving directly to server files for dynamic integration.  
+   - **Alternatives Considered**:  
+     - Database-backed admin panel.  
+     - Version-controlled content repositories (e.g., Git).  
+   - **Trade-offs**:  
+     - **Pros**: Reduces complexity for non-technical admins (DC-006); meets DC-015 (no restarts).  
+     - **Cons**: Limited audit capabilities compared to databases.  
+   - **Reasoning**: Balances modifiability (ASR-004) with usability for administrators (NFR-007).  
+
+9. **Decision: Sandboxed External Resource Navigation**  
+   - **Addressed Requirements**: ASR-006, DC-012, NFR-004  
+   - **Decision**: Open external links in new windows/tabs with browser sandboxing to isolate the core system.  
+   - **Alternatives Considered**:  
+     - Embedding external content via iframes.  
+   - **Trade-offs**:  
+     - **Pros**: Prevents security risks (NFR-004); aligns with DC-012.  
+     - **Cons**: Disrupts user flow (mitigated via context preservation).  
+   - **Reasoning**: Security (ASR-006) and integration (FR-006) requirements drove this choice.  
+
+10. **Decision: Modular Architecture with Separation of Concerns**  
+    - **Addressed Requirements**: ASR-010, NFR-006, DC-008  
+    - **Decision**: Adopt a layered modular design (UI, logic, data) to isolate components like Flash modules, physics engine, and admin interfaces.  
+    - **Alternatives Considered**:  
+      - Monolithic architecture for reduced initial complexity.  
+    - **Trade-offs**:  
+      - **Pros**: Eases maintenance (ASR-010); supports incremental updates (DC-008).  
+      - **Cons**: Higher upfront development effort.  
+    - **Reasoning**: Critical for long-term maintainability (NFR-006) and stakeholder priorities.  
+
+---
+
+**Key Trade-Off Summary**:  
+- **Flash vs. Modern Technologies**: Compatibility (ASR-001) and constraints (DC-001) prioritized over security/scalability.  
+- **Client vs. Server Processing**: Real-time performance (ASR-003) favored over centralized control.  
+- **Simplicity vs. Robustness**: Admin usability (DC-006) and browser-native security (DC-009) chosen over advanced features.  
+
+These decisions collectively address the system’s educational goals, stakeholder constraints, and quality attributes while balancing technical debt and future adaptability.
