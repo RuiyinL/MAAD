@@ -18,6 +18,7 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 
 ```plaintext
 ├── scripts               # Source code of the MAAD framework
+├── Interview Protocol    # A protocol of the interview design  
 ├── MAAD artifacts        # Generated artifacts of the MAAD framework
 │ ├── GPT-4o              # Generations of MAAD equipped with GPT-4o
 │ │ ├── GPT-4o_RAG        # Generations of MAAD equipped with GPT-4o (using RAG)
