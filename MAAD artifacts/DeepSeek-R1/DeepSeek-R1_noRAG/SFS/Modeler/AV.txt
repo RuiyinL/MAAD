@@ -1,0 +1,505 @@
+Logical View:  
+1 Class Diagram  
+[PlantUML]  
+@startuml  
+class FlashUI {  
+  -movieLoaded: boolean  
+  +playMovie()  
+  +skipMovie()  
+  +handleClickEvent()  
+}  
+
+class MediaDeliveryServer {  
+  +deliverMedia(asset: string)  
+  #optimizeStreaming()  
+}  
+
+class AdminInterface {  
+  -currentUser: string  
+  +authenticate(password: string): bool  
+  +renderForm(questionID: int)  
+  +validateInput(data: string)  
+}  
+
+class CMS {  
+  +saveQuestion(question: Question)  
+  +loadQuestion(id: int): Question  
+  -auditChange(user: string)  
+}  
+
+class StorylineEngine {  
+  -currentPlotBranch: string  
+  +adjustStoryline(progress: Progress)  
+  +getNextScene(): Scene  
+}  
+
+class GameStateManager {  
+  -currentState: State  
+  +transitionState(newState: State)  
+  +persistScore(score: int)  
+}  
+
+class LocalStorageModule {  
+  +store(key: string, value: JSON)  
+  +retrieve(key: string): JSON  
+  -encryptData(data: JSON)  
+}  
+
+class SecurityModule {  
+  +sanitizeInput(input: string): string  
+  +validateSession(token: string): bool  
+  +preventXSS(payload: string)  
+}  
+
+class ExternalLinkHandler {  
+  +openExternal(url: string)  
+  +validateDomain(domain: string): bool  
+}  
+
+FlashUI --> MediaDeliveryServer : «depends»\nRequests media assets  
+AdminInterface --> CMS : «uses»\nManages question updates  
+StorylineEngine "1" *-- "1" DecisionTreeModule : Controls branching logic  
+GameStateManager "1" --> "1" LocalStorageModule : Persists state  
+ExternalLinkHandler --> SecurityModule : «uses»\nSecurity checks  
+AdminInterface --> SecurityModule : «uses»\nInput validation  
+
+note top of MediaDeliveryServer  
+  Uses CDNIntegration and  
+  MediaOptimizer internally  
+end note  
+@enduml  
+
+2 Object Diagram  
+[PlantUML]  
+@startuml  
+object adminInterface1 {  
+  authenticate()  
+  renderForm()  
+}  
+
+object validationService1 {  
+  validateInput()  
+}  
+
+object cms1 {  
+  saveQuestion()  
+  auditChange()  
+}  
+
+object securityModule1 {  
+  sanitizeInput()  
+}  
+
+adminInterface1 --> validationService1 : validateQuestion()  
+validationService1 --> cms1 : saveQuestion(101)  
+adminInterface1 --> securityModule1 : sanitizeFormData()  
+
+object gameState1 {  
+  transitionState()  
+  persistScore()  
+}  
+
+object localStorage1 {  
+  store("score", 850)  
+}  
+
+gameState1 --> localStorage1 : persistScore()  
+@enduml  
+
+3 State Diagram  
+[PlantUML]  
+@startuml  
+[*] --> Idle : System initialized  
+
+state Idle {  
+  [*] --> WaitingForStart  
+  WaitingForStart --> PlayingIntroMovie : startSystem()  
+}  
+
+state PlayingIntroMovie {  
+  [*] --> Buffering  
+  Buffering --> Playing : mediaLoaded  
+  Playing --> MainMenu : movieCompleted  
+  Playing --> MainMenu : skipClicked  
+}  
+
+state MainMenu {  
+  [*] --> Interactive  
+  Interactive --> InGame : startGame()  
+  Interactive --> HelpSection : helpRequested()  
+}  
+
+state InGame {  
+  [*] --> PresentingQuestion  
+  PresentingQuestion --> EvaluatingAnswer : answerSubmitted  
+  EvaluatingAnswer --> PresentingQuestion : hasMoreQuestions?  
+  EvaluatingAnswer --> EndingScene : allQuestionsAnswered  
+}  
+
+state EndingScene {  
+  [*] --> DisplayScore  
+  DisplayScore --> MainMenu : returnToMainMenu()  
+}  
+
+Idle --> [*] : shutdown()  
+EndingScene --> [*] : exitGame()  
+@endumlDevelopment View:
+1 Package Diagram
+[PlantUML]
+@startuml
+package "Frontend" {
+    [Browser Compatibility Layer]
+    [Flash-based UI]
+    [Help System]
+    [UI Navigation Controller]
+    [External Link Handler]
+}
+
+package "Game Engine" {
+    [Storyline Engine]
+    [Decision Tree Module]
+    [User Progress Tracker]
+    [Game State Manager]
+    [Score Calculation Engine]
+}
+
+package "Administration" {
+    [Admin Interface]
+    [Validation Service]
+    [Audit Logging Module]
+}
+
+package "Storage" {
+    [Database/File Storage]
+    [Local Storage Module]
+    [Content Management System]
+}
+
+package "Media" {
+    [Media Optimizer]
+    [CDN Integration]
+    [Asset Loader]
+    [Media Delivery Server]
+}
+
+package "Security" {
+    [Security Module]
+    [RBAC Service]
+    [Authentication]
+}
+
+package "Infrastructure" {
+    [Load Balancer]
+    [Cloud Hosting]
+    [Caching Layer]
+}
+
+package "Support" {
+    [Documentation System]
+    [CI/CD Pipeline]
+}
+
+[Frontend] --> [Game Engine]
+[Frontend] --> [Media]
+[Frontend] --> [Security]
+[Game Engine] --> [Storage]
+[Administration] --> [Storage]
+[Administration] --> [Security]
+[Media] --> [Infrastructure]
+[Security] --> [Infrastructure]
+[Storage] --> [Infrastructure]
+[Support] <.. [Frontend]
+[Support] <.. [Game Engine]
+[Support] <.. [Administration]
+@enduml
+
+2 Component Diagram
+[PlantUML]
+@startuml
+component "Frontend UI" as FE {
+    interface "handleMedia()" as HM
+    interface "userInteraction()" as UI
+}
+
+component "Game State Manager" as GSM {
+    interface "trackScore()" as TS
+}
+
+component "Storyline Engine" as SE {
+    interface "adaptStory()" as AS
+}
+
+component "Admin Interface" as AI {
+    interface "manageContent()" as MC
+}
+
+component "CMS" as CMS {
+    interface "storeQuestions()" as SQ
+}
+
+component "Security Module" as SM {
+    interface "authenticate()" as AUTH
+}
+
+component "Media Delivery" as MD {
+    interface "streamAsset()" as SA
+}
+
+component "External Link Handler" as ELH {
+    interface "openProject()" as OP
+}
+
+FE ..> MD : requires <<streamAsset()>>
+FE ..> SM : requires <<authenticate()>>
+FE ..> GSM : requires <<trackScore()>>
+FE ..> SE : requires <<adaptStory()>>
+AI ..> CMS : requires <<storeQuestions()>>
+AI ..> SM : requires <<authenticate()>>
+SE ..> CMS : requires <<storeQuestions()>>
+ELH ..> FE : provides <<openProject()>>
+
+cloud "CDN" {
+    component "Cloud Storage" as CS
+}
+
+MD ..> CS : depends on
+@endumlProcess View:  
+1 Activity Diagram  
+[PlantUML]  
+@startuml  
+start  
+:User launches system;  
+:Play introductory movie;  
+if (User clicks to skip?) then (yes)  
+  :Stop movie playback;  
+else (no)  
+  :Continue playing movie;  
+endif  
+:Transition to Main Menu;  
+:Display Help, Start Button, Links;  
+if (User selects "Start Game") then (yes)  
+  :Load Gameplay Sequence;  
+  repeat  
+    :Present fraction question;  
+    :Capture user input;  
+    :Validate input;  
+    if (Input valid?) then (yes)  
+      :Update score;  
+      :Provide feedback (correct/incorrect);  
+      if (Critical question?) then (yes)  
+        :Adjust storyline branch;  
+      else (no)  
+        :Proceed to next question;  
+      endif  
+    else (no)  
+      :Display error message;  
+      :Request new input;  
+    endif  
+  repeat while (More questions?)  
+  :Transition to Ending Scene;  
+  :Display final score and narrative conclusion;  
+  if (User selects "Quit") then (yes)  
+    :End session;  
+  else (no)  
+    :Return to Main Menu;  
+  endif  
+else (no)  
+  :Wait for user action;  
+endif  
+stop  
+@enduml  
+
+2 Sequence Diagram  
+[PlantUML]  
+@startuml  
+actor User  
+participant "Frontend UI" as ui  
+participant "InputValidationModule" as ivm  
+participant "ScoreCalculator" as sc  
+participant "StorylineEngine" as se  
+participant "LocalStorage" as ls  
+
+User -> ui : Submits answer  
+activate ui  
+ui -> ivm : Validate(answer)  
+activate ivm  
+alt valid input  
+  ivm -> sc : CalculateScore(answer)  
+  activate sc  
+  sc -> se : NotifyCorrectAnswer()  
+  activate se  
+  se -> se : AdjustStoryline()  
+  se --> sc : Updated narrative  
+  deactivate se  
+  sc -> ls : SaveScore(updatedScore)  
+  activate ls  
+  ls --> sc : Confirmation  
+  deactivate ls  
+  sc --> ui : DisplayFeedback(correct)  
+  deactivate sc  
+else invalid input  
+  ivm --> ui : DisplayError()  
+  deactivate ivm  
+end  
+deactivate ivm  
+ui --> User : Show updated UI  
+deactivate ui  
+@enduml  
+
+3 Collaboration Diagram  
+[PlantUML]  
+@startuml  
+participant "User" as U  
+participant "Frontend UI" as FUI  
+participant "InputValidationModule" as IVM  
+participant "ScoreCalculator" as SC  
+participant "StorylineEngine" as SE  
+participant "LocalStorage" as LS  
+
+U -> FUI : 1. Submits answer  
+FUI -> IVM : 2. Validate(answer)  
+alt valid  
+  IVM -> SC : 3. CalculateScore(answer)  
+  SC -> SE : 4. NotifyCorrectAnswer()  
+  SE -> SE : 5. AdjustStoryline()  
+  SC -> LS : 6. SaveScore(updatedScore)  
+  LS --> SC : 7. Confirmation  
+  SC --> FUI : 8. DisplayFeedback(correct)  
+else invalid  
+  IVM --> FUI : 3. DisplayError()  
+end  
+FUI --> U : 9. Show updated UI  
+@endumlProcess View:
+1 Deployment Diagram
+[PlantUML]
+@startuml
+node "Client Web Browser" as client {
+  artifact "Flash-based UI"
+  artifact "Local Storage"
+  artifact "Browser Compatibility Layer"
+}
+
+node "Cloud Server" as server {
+  artifact "Media Delivery Server"
+  artifact "Content Management System"
+  artifact "Database"
+  artifact "Load Balancer"
+  artifact "Security Module"
+  artifact "API Gateway"
+}
+
+node "CDN" as cdn {
+  artifact "Optimized Media Assets"
+}
+
+client -[#blue]-> server : HTTP/HTTPS
+server -[#green]-> cdn : Sync Assets
+client -[#orange]-> cdn : Fetch Media
+server -[#black]-> server : Internal API Calls
+@enduml
+
+2 Container Diagram
+[PlantUML]
+@startuml
+artifact "Web Browser" as browser {
+  [Flash-based UI]
+  [Local Storage]
+  [Game State Manager]
+}
+
+artifact "Admin Portal" as admin {
+  [Question Updater]
+  [Form Validation]
+  [Audit Logger]
+}
+
+artifact "Media Server" as media {
+  [Asset Loader]
+  [Media Optimizer]
+  [CDN Connector]
+}
+
+artifact "Core Application" as app {
+  [Storyline Engine]
+  [Decision Tree]
+  [Score Calculator]
+}
+
+artifact "Database" as db {
+  [Questions Repository]
+  [User Progress]
+}
+
+artifact "API Gateway" as gateway {
+  [Security Filter]
+  [External Link Handler]
+  [RBAC Module]
+}
+
+browser --> media : Stream Movies
+browser --> app : Submit Answers\nFetch Storyline
+app --> db : Read/Write Progress
+admin --> db : Manage Questions
+gateway --> browser : Embed External Content
+media --> browser : Deliver Compressed Assets
+admin --> gateway : Authenticate Requests
+gateway --> external : Access S2S Projects
+@endumlProcess View:
+1 Use Case Diagram
+[PlantUML]
+@startuml
+left to right direction
+
+actor Student
+actor Administrator
+
+usecase "View Introductory Movie" as UC1
+usecase "Skip Introductory Movie" as UC2
+usecase "Access Main Menu" as UC3
+usecase "Start Game" as UC4
+usecase "Answer Fraction Questions" as UC5
+usecase "Request Hint" as UC6
+usecase "View Final Feedback" as UC7
+usecase "Quit System" as UC8
+usecase "Return to Main Menu" as UC9
+usecase "Access External Projects" as UC10
+usecase "Access Help Section" as UC11
+usecase "View Team Summary" as UC12
+usecase "View Denominators Web Page" as UC13
+
+usecase "Login" as UC14
+usecase "Update Questions" as UC15
+usecase "Edit Questions" as UC16
+usecase "Validate Questions" as UC17
+usecase "Save Questions" as UC18
+
+' Student relationships
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> UC8
+Student --> UC9
+Student --> UC10
+
+' Extends/Includes for Student
+UC2 .> UC1 : <<extend>>
+UC3 .> UC4 : <<include>>
+UC3 .> UC11 : <<include>>
+UC3 .> UC12 : <<include>>
+UC3 .> UC13 : <<include>>
+UC3 .> UC10 : <<include>>
+UC4 .> UC5 : <<include>>
+UC4 .> UC6 : <<include>>
+UC4 .> UC7 : <<include>>
+
+' Administrator relationships
+Administrator --> UC14
+Administrator --> UC15
+
+' Includes for Administrator
+UC15 .> UC14 : <<include>>
+UC15 .> UC16 : <<include>>
+UC15 .> UC17 : <<include>>
+UC15 .> UC18 : <<include>>
+@enduml
+@enduml

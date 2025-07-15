@@ -1,0 +1,91 @@
+### **Architecture Evaluation Report for "Space Fractions" System (ATAM Method)**
+
+---
+
+## **1. Architectural Presentation**  
+The Space Fractions system follows a **client-server modular architecture** designed for web-based educational gaming. Key components:  
+- **Client Layer**: Flash-based UI (introductory movie, gameplay), local storage for scores, physics engine (velocity calculations).  
+- **Server Layer**: Content delivery, admin interface (question updates), storyline engine (adaptive narratives).  
+- **External Integration**: Math Umbrella (S2S resources), browser security sandbox.  
+- **Key Flows**:  
+  - **User**: Introductory movie → Main menu → Story-driven questions → Score display.  
+  - **Admin**: Authentication → Question updater → File storage integration.  
+
+---
+
+## **2. Business Goals**  
+1. **Primary**: Provide an engaging, story-driven tool to improve sixth graders’ fraction skills.  
+2. **Secondary**:  
+   - Ensure accessibility via web browsers with minimal hardware requirements.  
+   - Support administrative customization of questions.  
+   - Integrate with legacy Flash-based systems (ASR-001).  
+   - Prioritize maintainability over scalability (ASR-010).  
+
+---
+
+## **3. Prioritized Quality Attribute Scenarios**  
+| **Scenario** | **Stimulus** | **Response** | **Priority** |  
+|--------------|--------------|--------------|--------------|  
+| **Usability** | Alice (non-tech-savvy) skips the intro movie | System transitions to main menu within 0.5s | High |  
+| **Performance** | Bobby submits fraction input during gameplay | Velocity adjustment rendered in <200ms | Critical |  
+| **Modifiability** | Claire updates question Q42 via admin interface | Changes reflect in gameplay without server restart | High |  
+| **Security** | Unauthorized user attempts admin access | Browser sandbox blocks request | Medium |  
+| **Reliability** | 50 concurrent users play the system | Server load balancer maintains <70% CPU usage | Medium |  
+
+---
+
+## **4. Risks and Non-Risks**  
+### **Risks**  
+1. **Flash Dependency (DC-001)**:  
+   - **Risk**: Deprecated technology limits browser compatibility and introduces security vulnerabilities (NFR-004).  
+   - **Impact**: Long-term sustainability threatened; violates modern accessibility standards.  
+2. **Client-Side Score Storage**:  
+   - **Risk**: LocalStorage scores vulnerable to tampering despite checksums (NFR-009).  
+   - **Impact**: Compromised educational integrity if students manipulate scores.  
+3. **Browser-Native Security**:  
+   - **Risk**: Insufficient protection against XSS/cross-site scripting via Flash (ASR-006).  
+   - **Impact**: Admin credentials or question data could be exposed.  
+
+### **Non-Risks**  
+1. **Modular Physics Engine**: Client-side processing ensures real-time responsiveness (ASR-003).  
+2. **Dynamic Narrative Engine**: Decision trees enable adaptive storylines without server overhead (ASR-007).  
+
+---
+
+## **5. Risk Themes**  
+1. **Technical Debt from Legacy Technologies**:  
+   - Flash dependency and client-side storage prioritize short-term constraints (DC-001, DC-005) over long-term security/scalability.  
+   - **Theme Impact**: Limits future integration with modern educational platforms (e.g., mobile apps).  
+2. **Usability-Security Tradeoffs**:  
+   - Simplified admin interface (DC-006) sacrifices audit trails and role-based access control.  
+   - **Theme Impact**: Increases risk of accidental/malicious content corruption.  
+
+---
+
+## **6. Mapping Architectural Decisions to Quality Requirements**  
+| **Decision** | **Supported QA** | **Hindered QA** |  
+|--------------|------------------|------------------|  
+| Client-side Flash animations | Usability (ASR-005), Compatibility (NFR-001) | Security (NFR-004), Maintainability (ASR-010) |  
+| Browser-native security model | Simplicity (DC-009) | Data integrity (NFR-009) |  
+| LocalStorage score persistence | Offline functionality (DC-005) | Tamper resistance (NFR-009) |  
+| Load-balanced servers | Reliability (ASR-002) | Cost (NFR-010) |  
+
+---
+
+## **7. Sensitivity and Tradeoff Points**  
+### **Sensitivity Points**  
+1. **Physics Engine Client-Side Processing**: Directly impacts real-time performance (NFR-003) but risks inconsistency across devices (DC-003).  
+2. **Intro Movie Skippability**: Event-driven state transitions (DC-013) improve usability but complicate state management.  
+
+### **Tradeoff Points**  
+1. **Flash vs. HTML5**:  
+   - **Improves**: Compatibility with legacy systems (DC-001).  
+   - **Degrades**: Security (NFR-004), mobile accessibility.  
+2. **Admin Interface Simplicity**:  
+   - **Improves**: Usability for non-technical admins (DC-006).  
+   - **Degrades**: Auditability and version control.  
+
+---
+
+## **Conclusion**  
+The architecture successfully addresses immediate educational goals and stakeholder constraints but carries significant technical debt (Flash, security model). A phased migration to HTML5 and centralized score validation are recommended to align with long-term sustainability.

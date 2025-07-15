@@ -1,0 +1,151 @@
+# Space Fractions System Architecture Document
+
+## 1. Goals
+The architecture aims to achieve the following objectives:
+- **Cross-Browser Compatibility**: Ensure seamless operation across Flash-supported browsers (ASR-001, NFR-001).
+- **Real-Time Responsiveness**: Process fraction inputs and adjust gameplay physics with ≤100ms latency (ASR-003, NFR-003).
+- **Scalability**: Support 1,000+ concurrent users via load-balanced web servers (ASR-002, NFR-010).
+- **Maintainability**: Enable content updates within 2 hours via modular admin interfaces (ASR-010, DC-008).
+- **Data Integrity**: Validate client-side scores with SHA-256 checksums (ASR-008, NFR-009).
+- **Security**: Restrict admin access to HTTPS with role-based controls (ASR-004, NFR-004).
+
+---
+
+## 2. Detailed Architecture Design
+### 2.1 Component Overview
+| **Component**               | **Responsibilities**                                                                 | **Interactions**                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| **Flash Player Integration** | Render animations, handle mouse events                                                | Communicates with Browser Compatibility Layer for cross-browser rendering        |
+| **Physics Engine**           | Calculate velocity using fraction inputs, update spaceship position                   | Receives validated inputs from InputProcessingModule; outputs to RenderingModule |
+| **Admin Interface**          | Authenticate users, validate/question updates via web forms                           | Writes to FileStorageSystem via REST API; uses DataValidator                     |
+| **Storyline Engine**         | Manage adaptive narrative paths using decision trees                                  | Reads from ContentRepository; updates based on DecisionManager                   |
+| **LocalStorageManager**      | Store/retrieve scores with validation checks                                          | Used by ScoringModule; interfaces with DataValidator                             |
+
+### 2.2 Workflow Example: User Skips Introductory Movie
+1. **Event Trigger**: Mouse click detected by EventHandler.
+2. **Playback Interrupt**: IntroductoryMovieModule.stopMovie() invoked.
+3. **State Transition**: StateManager switches context to MainMenuModule.
+4. **UI Update**: MainMenuModule renders options via Flash UI controller.
+
+---
+
+## 3. Component & Connector Specifications
+### 3.1 Communication Protocols
+| **Interaction**                   | **Protocol**      | **Data Format** | **Error Handling**                                                                 |
+|------------------------------------|-------------------|-----------------|------------------------------------------------------------------------------------|
+| Admin question updates             | REST API (HTTPS)  | JSON            | 400 Bad Request for invalid schema; 401 Unauthorized for failed authentication    |
+| External resource links            | HTTP/HTTPS        | HTML            | Timeout after 5s; fallback to cached S2S resources                                 |
+| Client-server score validation     | WebSocket         | Binary          | Retry 3x on connection loss; checksum mismatch triggers client-side recalculation |
+
+### 3.2 Performance Thresholds
+- **Velocity Calculation**: ≤50ms per input (DC-014)
+- **Movie Load Time**: ≤1 minute on 56k modem (DC-010)
+- **Concurrent Users**: 1,000+ with <2s response time (NFR-010)
+
+---
+
+## 4. Key Technologies & Trade-Offs
+### 4.1 Infrastructure
+| **Technology**         | **Purpose**                            | **Trade-Offs**                                                                 |
+|-------------------------|----------------------------------------|--------------------------------------------------------------------------------|
+| **Adobe Flash Player**  | Core animation/UI rendering (DC-001)   | Security risks vs. legacy compatibility                                        |
+| **Node.js + Express**   | Backend server for admin APIs (ASR-004)| Single-threaded model vs. lightweight I/O handling                             |
+| **HAProxy**             | Load balancing (ASR-002)               | Added complexity vs. horizontal scalability                                    |
+| **SQLite**              | Question storage (DC-015)              | Limited concurrency vs. zero-configuration deployment                          |
+
+### 4.2 Scalability/Fault Tolerance
+- **Flash Content Delivery**: AWS CloudFront CDN (caches movies globally)
+- **Redundancy**: Active-passive server setup with 99.9% uptime SLA
+- **Trade-Off**: Cost of CDN vs. compliance with DC-010 (modem loading)
+
+---
+
+## 5. Design Decisions
+### 5.1 Client-Side Physics Processing
+- **Requirements Addressed**: ASR-003, DC-014
+- **Alternatives**: Server-side computation
+- **Rationale**: Reduces round-trip latency for real-time velocity updates.
+
+### 5.2 Browser-Native Security
+- **Requirements Addressed**: DC-009, NFR-004
+- **Pattern**: Sandboxed iframes for external links (ASR-006)
+- **Rationale**: Aligns with DC-009 constraints while preventing XSS.
+
+### 5.3 Modular Storyline Engine
+- **Requirements Addressed**: ASR-007, DC-011
+- **Pattern**: Decision tree with JSON configuration
+- **Rationale**: Enables non-technical admins to update narratives (FR-005).
+
+---
+
+## 6. Design Decision Rationale
+### 6.1 Flash Over HTML5
+- **Why**: Legacy compliance (DC-001), stakeholder mandate
+- **Compromise**: Roadmap for post-launch migration to WebAssembly
+
+### 6.2 localStorage Over Cookies
+- **Why**: Client-side persistence (DC-005)
+- **Validation**: Checksum comparison prevents tampering (NFR-009)
+
+### 6.3 File-Based Question Storage
+- **Why**: Simplified admin workflow (DC-006)
+- **Risk Mitigation**: Daily backups to offsite S3 bucket
+
+---
+
+## 7. Executable Prototype Skeleton
+### 7.1 Physics Engine (JavaScript)
+```javascript
+class PhysicsEngine {
+  constructor() {
+    this.gravity = 9.81; // m/s²
+  }
+
+  calculateVelocity(numerator, denominator) {
+    if (denominator === 0) throw new Error("Invalid denominator");
+    const fraction = numerator / denominator;
+    return fraction * this.gravity; // Simplified model
+  }
+}
+```
+
+### 7.2 Admin API Endpoint (Node.js)
+```javascript
+app.post('/api/questions', async (req, res) => {
+  try {
+    const { question, answer } = req.body;
+    if (!validateQuestionSchema(question)) {
+      return res.status(400).json({ error: "Invalid question format" });
+    }
+    await fs.promises.writeFile('questions.json', JSON.stringify(question));
+    res.status(201).json({ status: "Question saved" });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+```
+
+### 7.3 Storyline Decision Tree (JSON)
+```json
+{
+  "nodeId": "Q42",
+  "question": "Which fraction equals 3/4?",
+  "correctPath": {
+    "nextNode": "Q43",
+    "narrative": "The spaceship accelerates!"
+  },
+  "wrongPath": {
+    "nextNode": "Q42-retry",
+    "narrative": "The engine sputters..."
+  }
+}
+```
+
+---
+
+**Revision History**  
+- v1.0 (2023-10-15): Initial architecture baseline  
+- v1.1 (2023-10-20): Added prototype code samples  
+
+*Approved by: [Architecture Review Board]*  
+*Next Steps: Load testing with JMeter, security audit*
