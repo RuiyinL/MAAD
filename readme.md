@@ -18,6 +18,7 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 
 ```plaintext
 ├── scripts               # Source code of the MAAD framework
+├── requirements          # Requirements dataset
 ├── Interview Protocol    # An interview protocol for evaluating the MAAD framework
 ├── MAAD artifacts        # Generated artifacts of the MAAD framework
 │ ├── GPT-4o              # Generations of MAAD equipped with GPT-4o
@@ -31,3 +32,14 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 │ └── Llama3.3-noRAG      # Generations of MAAD equipped with Llama3.3 (without using RAG)
 ├── MetaGPT               # Comparative results with MetaGPT
 └── README.md             # Description of this replication package
+```
+
+## Citation
+
+```
+@article{Li2025MAAD,
+  author = {Li, Ruiyin and Zhang, Yiran and Zhou, Xiyu and Liang, Peng and Sun, Weisong and Xuan, Jifeng and Jin, Zhi and Liu, Yang},
+  title = {{MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration}},
+  journal={arXiv preprint arXiv:2507.21382},
+  year={2025}
+}
