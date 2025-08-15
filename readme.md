@@ -34,12 +34,13 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 └── README.md             # Description of this replication package
 ```
 
-## Citation
+## 📝 Citation
 
-```
+```bibtex
 @article{Li2025MAAD,
   author = {Li, Ruiyin and Zhang, Yiran and Zhou, Xiyu and Liang, Peng and Sun, Weisong and Xuan, Jifeng and Jin, Zhi and Liu, Yang},
   title = {{MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration}},
   journal={arXiv preprint arXiv:2507.21382},
   year={2025}
 }
+```
