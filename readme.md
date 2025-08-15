@@ -2,7 +2,7 @@
 
 This is the replication package for the paper: *MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration*. This repository contains an introduction of MAAD framework, source code for the implementations of each agent, the dataset of several requirements cases, and MAAD's generations based on one requirements case.
 
-## Introduction
+## 🚨 Introduction
 
 The MAAD framework implements a knowledge‑driven, multi‑agent pipeline that autonomously transforms a Software Requirements Specification (SRS) into a complete architecture design, MAAD comprises four specialized agents, and each individual agent is equipped with perception, reasoning, and action capabilities.
 
@@ -44,3 +44,4 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
   year={2025}
 }
 ```
+
