@@ -1,0 +1,41 @@
+
+sequenceDiagram
+    participant M as Main
+    participant NS as NetworkService
+    participant AM as AuthManager
+    participant TC as TmddCodec
+    participant DR as DataRepository
+    participant DC as DeviceController
+    participant CM as ConfigManager
+    
+    Note over M,CM: System Startup
+    M->>CM: load_config(config.xml)
+    CM-->>M: return mode (Normal/Test)
+    M->>DR: connect(traffic.db)
+    DR-->>M: connection established
+    M->>NS: start()
+    NS->>NS: listen TCP/IP port
+    
+    Note over M,DC: Incoming TMDD Message
+    NS->>NS: on_message_received(raw_data)
+    NS->>TC: decode_tmdd(raw_data)
+    TC-->>NS: return parsed_data
+    NS->>AM: authenticate(user, pass)
+    AM-->>NS: return true/false
+    alt Authentication Success
+        NS->>DR: store_traffic_data(parsed_data)
+        DR-->>NS: data stored
+        NS->>NS: send_response(ACK)
+    else Authentication Failed
+        NS->>NS: send_response(NACK)
+        NS->>DR: log_activity(Auth Failure)
+    end
+    
+    Note over M,DC: Remote Device Control (GUI)
+    DC->>AM: authenticate(operator, pass)
+    AM-->>DC: return true
+    DC->>CM: is_test_mode()
+    CM-->>DC: return false
+    DC->>DC: execute_command(DMS_01, SET_MSG)
+    DC->>DR: log_activity(Command Sent)
+    DR-->>DC: logged

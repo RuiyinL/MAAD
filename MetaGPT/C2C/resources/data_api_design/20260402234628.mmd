@@ -1,0 +1,56 @@
+
+classDiagram
+    class Main {
+        -std::unique_ptr<NetworkService> network
+        -std::unique_ptr<DataRepository> repository
+        -std::unique_ptr<DeviceController> device_ctrl
+        -std::unique_ptr<ConfigManager> config
+        +main(int argc, char* argv[]) int
+        +initialize() bool
+        +run() void
+    }
+    class NetworkService {
+        -boost::asio::io_context io_ctx
+        -std::unique_ptr<AuthManager> auth
+        -std::unique_ptr<TmddCodec> codec
+        +start() void
+        +on_message_received(std::string data) void
+        +send_response(std::string msg) void
+    }
+    class DataRepository {
+        -sqlite3* db
+        +connect(std::string path) bool
+        +store_traffic_data(std::map<std::string, std::string> data) bool
+        +get_incidents() std::vector<Incident>
+        +log_activity(std::string action) void
+    }
+    class DeviceController {
+        -std::map<std::string, Device> devices
+        +execute_command(std::string device_id, std::string cmd) bool
+        +get_device_status(std::string device_id) std::string
+        +register_device(std::string id, DeviceType type) void
+    }
+    class AuthManager {
+        -std::map<std::string, std::string> credentials
+        +authenticate(std::string user, std::string pass) bool
+        +hash_password(std::string pass) std::string
+    }
+    class ConfigManager {
+        -std::string mode
+        -std::string agency_id
+        +load_config(std::string path) bool
+        +get_mode() std::string
+        +is_test_mode() bool
+    }
+    class TmddCodec {
+        +encode_tmdd(std::map<std::string, std::string> data) std::string
+        +decode_tmdd(std::string raw_data) std::map<std::string, std::string>
+    }
+    Main --> NetworkService
+    Main --> DataRepository
+    Main --> DeviceController
+    Main --> ConfigManager
+    NetworkService --> AuthManager
+    NetworkService --> TmddCodec
+    NetworkService --> DataRepository
+    DeviceController --> DataRepository

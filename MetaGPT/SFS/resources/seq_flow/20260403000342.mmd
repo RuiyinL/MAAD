@@ -1,0 +1,32 @@
+
+sequenceDiagram
+    participant S as Student (Browser)
+    participant FE as Frontend (React)
+    participant BE as Backend (Flask)
+    participant DB as SQLite
+    
+    S->>FE: Load Game
+    FE->>BE: GET /api/questions
+    BE->>DB: SELECT questions
+    DB-->>BE: Return JSON
+    BE-->>FE: Return Questions
+    FE->>S: Display Intro & Menu
+    S->>FE: Start Game
+    FE->>FE: Render GameScene
+    S->>FE: Select Answer
+    FE->>BE: POST /api/submit_answer
+    BE->>BE: Validate & Score
+    BE-->>FE: Return Result
+    FE->>FE: Update Score/State
+    FE->>S: Show Feedback/Next Question
+    
+    participant T as Teacher
+    participant Admin as AdminPanel
+    T->>Admin: Login
+    Admin->>BE: POST /admin/login
+    BE-->>Admin: Auth Token
+    T->>Admin: Update Question
+    Admin->>BE: PUT /api/questions/{id}
+    BE->>DB: UPDATE questions
+    DB-->>BE: Success
+    BE-->>Admin: Confirm Update

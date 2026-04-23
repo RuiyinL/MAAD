@@ -1,0 +1,28 @@
+
+sequenceDiagram
+    participant M as Main
+    participant DB as Database
+    participant DS as DeviceSimulator
+    participant ME as MonitorEngine
+    participant AS as AlertService
+    participant UI as NurseDashboard
+    
+    M->>DB: Initialize Tables
+    M->>ME: Start Background Poller
+    loop Every Period (e.g., 5s)
+        ME->>DS: read_data(patient_id)
+        DS-->>ME: VitalRecord
+        ME->>DB: save_record(record)
+        ME->>ME: check_vitals(record)
+        alt Vitals Out of Range
+            ME->>AS: create_alert(patient_id, msg)
+            AS->>DB: save_alert(alert)
+            AS->>UI: Push Notification (WebSocket)
+        else Vitals Normal
+            ME-->>ME: Continue
+        end
+    end
+    UI->>M: GET /api/patients
+    M->>DB: query patients
+    DB-->>M: PatientData
+    M-->>UI: JSON Response

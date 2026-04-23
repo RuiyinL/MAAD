@@ -1,0 +1,40 @@
+
+classDiagram
+    class App {
+        -Flask app
+        -Database db
+        +init_app()
+        +run()
+    }
+    class GameEngine {
+        -List[Question] questions
+        -int current_index
+        -int score
+        +load_questions() List
+        +check_answer(selected: str, correct: str) bool
+        +calculate_score() int
+    }
+    class Question {
+        -int id
+        -str text
+        -List[str] options
+        -str correct_answer
+        -str hint
+        +to_dict() dict
+    }
+    class AdminService {
+        -Session session
+        +authenticate(username: str, password: str) bool
+        +update_question(q_id: int, data: dict) bool
+        +get_stats() dict
+    }
+    class StudentProfile {
+        -str name
+        -int total_score
+        -int completed_levels
+        +update_progress(score: int)
+    }
+    App --> GameEngine
+    App --> AdminService
+    GameEngine --> Question
+    AdminService --> StudentProfile

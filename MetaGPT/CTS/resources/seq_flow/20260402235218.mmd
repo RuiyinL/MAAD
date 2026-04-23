@@ -1,0 +1,28 @@
+
+sequenceDiagram
+    participant C as Citizen/IO Client
+    participant A as API Gateway (FastAPI)
+    participant Auth as AuthService
+    participant DB as Database (PostgreSQL)
+    participant ES as SearchEngine (Elasticsearch)
+    participant Audit as AuditService
+    participant Sync as SyncService
+    C->>A: POST /api/v1/cases/register (Case Data)
+    A->>Auth: validate_token(token)
+    Auth-->>A: User Context (Role: IO/Citizen)
+    A->>DB: BEGIN Transaction
+    A->>DB: INSERT INTO cases (Case Data)
+    A->>Audit: log_action(user, 'CREATE', Case)
+    Audit->>DB: INSERT INTO audit_logs (Immutable)
+    A->>ES: index_case(Case Data)
+    ES-->>A: Acknowledged
+    A->>DB: COMMIT Transaction
+    A-->>C: 201 Created (Case ID)
+    note right of C: Offline Mode Scenario
+    C->>Sync: save_local(Case Data)
+    C->>A: POST /api/v1/sync (When Online)
+    A->>Sync: sync_offline_data(User, Payload)
+    Sync->>DB: Resolve Conflicts & Update
+    Sync->>Audit: log_action(user, 'SYNC', Batch)
+    Sync-->>A: Sync Status
+    A-->>C: 200 OK

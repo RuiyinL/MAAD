@@ -1,0 +1,57 @@
+
+classDiagram
+    class DigitalHomeSystem {
+        +GatewaySimulator gateway
+        +DatabaseManager db
+        +UserService auth
+        +ScheduleService scheduler
+        +BackupManager backup
+        +start()
+        +shutdown()
+    }
+    class GatewaySimulator {
+        -dict devices
+        -float latency
+        +connect()
+        +read_sensor(device_id: str) dict
+        +write_controller(device_id: str, state: bool)
+        +simulate_environment()
+    }
+    class DatabaseManager {
+        -Session session
+        +init_db()
+        +save_data(data: dict)
+        +query_data(query: str) list
+        +backup_db(path: str)
+    }
+    class UserService {
+        +create_user(username: str, password: str) User
+        +authenticate(username: str, password: str) str
+        +get_user_role(token: str) str
+    }
+    class ScheduleService {
+        -APScheduler scheduler
+        +add_job(job_id: str, cron: str, action: callable)
+        +remove_job(job_id: str)
+        +trigger_manual(job_id: str)
+    }
+    class BackupManager {
+        +create_backup() str
+        +restore_backup(path: str) bool
+        +verify_integrity() bool
+    }
+    class Device {
+        +str device_id
+        +str device_type
+        +bool status
+        +float value
+        +update_status(status: bool)
+        +get_value() float
+    }
+    DigitalHomeSystem --> GatewaySimulator
+    DigitalHomeSystem --> DatabaseManager
+    DigitalHomeSystem --> UserService
+    DigitalHomeSystem --> ScheduleService
+    DigitalHomeSystem --> BackupManager
+    GatewaySimulator --> Device
+    DatabaseManager --> Device

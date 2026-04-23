@@ -1,0 +1,63 @@
+
+classDiagram
+    class Main {
+        +app: FastAPI
+        +__init__()
+        +run()
+    }
+    class Database {
+        +engine: AsyncEngine
+        +session_local: sessionmaker
+        +get_db()
+    }
+    class User {
+        +id: int
+        +username: str
+        +role: RoleEnum
+        +password_hash: str
+        +is_active: bool
+    }
+    class Case {
+        +id: int
+        +fir_number: str
+        +description: str
+        +modus_operandi: str
+        +status: CaseStatusEnum
+        +io_id: int
+        +created_at: datetime
+    }
+    class AuditLog {
+        +id: int
+        +user_id: int
+        +action: str
+        +entity_type: str
+        +entity_id: int
+        +timestamp: datetime
+        +ip_address: str
+        # Immutable after creation
+    }
+    class SearchEngine {
+        +client: Elasticsearch
+        +index_case(case: Case)
+        +search_modus_operandi(query: str) list
+    }
+    class AuditService {
+        +db: Session
+        +log_action(user: User, action: str, entity: object)
+    }
+    class SyncService {
+        +sync_offline_data(user_id: int, payload: dict)
+        +get_delta_changes(last_sync: datetime)
+    }
+    class APIRouter {
+        +register_routes()
+    }
+    Main --> Database
+    Main --> APIRouter
+    APIRouter --> User
+    APIRouter --> Case
+    Case --> AuditLog
+    AuditService --> AuditLog
+    SearchEngine --> Case
+    SyncService --> Case
+    SyncService --> AuditLog

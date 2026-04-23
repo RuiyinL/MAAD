@@ -1,0 +1,60 @@
+
+classDiagram
+    class Main {
+        +app: FastAPI
+        +engine: AsyncEngine
+        +start_up() None
+        +shutdown() None
+    }
+    class Patient {
+        +int id
+        +str name
+        +str bed_number
+        +ThresholdConfig thresholds
+        +Device device
+    }
+    class VitalRecord {
+        +int id
+        +int patient_id
+        +datetime timestamp
+        +float pulse
+        +float temperature
+        +float blood_pressure
+        +float skin_resistance
+    }
+    class ThresholdConfig {
+        +int id
+        +int patient_id
+        +float pulse_min
+        +float pulse_max
+        +float temp_min
+        +float temp_max
+        +float bp_min
+        +float bp_max
+    }
+    class Device {
+        +int id
+        +int patient_id
+        +str status
+        +datetime last_heartbeat
+    }
+    class MonitorEngine {
+        +db: Session
+        +alert_service: AlertService
+        +check_vitals(record: VitalRecord) Alert|null
+    }
+    class AlertService {
+        +create_alert(patient_id: int, message: str) Alert
+        +notify_nurses(alert: Alert) None
+    }
+    class DeviceSimulator {
+        +read_data(patient_id: int) VitalRecord
+    }
+    Main --> Patient
+    Main --> MonitorEngine
+    Patient --> ThresholdConfig
+    Patient --> Device
+    Patient --> VitalRecord
+    MonitorEngine --> AlertService
+    MonitorEngine --> VitalRecord
+    DeviceSimulator --> VitalRecord

@@ -1,0 +1,50 @@
+
+classDiagram
+    class Main {
+        +void main()
+        +void timer_isr() 
+    }
+    class SystemTimer {
+        -volatile uint8_t tick_count
+        -volatile bool control_flag
+        +void init()
+        +void tick()
+        +bool is_control_cycle()
+    }
+    class ControlEngine {
+        -SystemMode current_mode
+        -ControlContext ctx
+        +void init()
+        +void execute_cycle()
+        +void switch_mode(SystemMode mode)
+    }
+    class FaultManager {
+        -FaultStatus status
+        -uint8_t gyro_error_count
+        +void check_gyro_health()
+        +void check_thruster_health()
+        +bool is_system_safe()
+    }
+    class CommProtocol {
+        -TxBuffer tx_buf
+        -RxBuffer rx_buf
+        +void parse_command()
+        +void send_telemetry()
+    }
+    class HAL {
+        +void write_thrusters()
+        +void read_sensors()
+        +void uart_send()
+        +void uart_recv()
+    }
+    class PIDController {
+        +float calculate_error()
+        +float output()
+    }
+    Main --> SystemTimer
+    Main --> ControlEngine
+    ControlEngine --> FaultManager
+    ControlEngine --> PIDController
+    ControlEngine --> CommProtocol
+    ControlEngine --> HAL
+    CommProtocol --> HAL

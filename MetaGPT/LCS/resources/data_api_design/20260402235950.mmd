@@ -1,0 +1,60 @@
+
+classDiagram
+    class Main {
+        +main()
+        -app: QApplication
+        -core: ControlSystem
+    }
+    class ControlSystem {
+        -interlock: SafetyInterlock
+        -hardware: HardwareDriver
+        -db: DatabaseManager
+        -scheduler: SequenceScheduler
+        +execute_command(cmd: Command) bool
+        +get_status() dict
+        +start_polling()
+    }
+    class SafetyInterlock {
+        +validate_command(cmd: Command, current_state: dict) bool
+        -check_conflicting_lanes(state: dict) bool
+        -check_maintenance_locks() bool
+    }
+    class HardwareDriver {
+        +connect()
+        +send_command(device_id: str, action: str)
+        +read_status() dict
+        +disconnect()
+    }
+    class GUIWindow {
+        -map_view: MapWidget
+        -control_panel: ControlPanel
+        -status_bar: StatusBar
+        +update_display(status: dict)
+        +send_command(cmd: Command)
+        +login(user: str, pwd: str)
+    }
+    class DatabaseManager {
+        +log_audit(action: str, user: str, result: str)
+        +get_user_role(user: str) str
+        +save_configuration(config: dict)
+    }
+    class SequenceScheduler {
+        +load_schedule()
+        +check_triggers()
+        +request_sequence(cmd: Command)
+    }
+    class Command {
+        +device_id: str
+        +action: str
+        +user_id: str
+        +timestamp: datetime
+    }
+    Main --> ControlSystem
+    Main --> GUIWindow
+    ControlSystem --> SafetyInterlock
+    ControlSystem --> HardwareDriver
+    ControlSystem --> DatabaseManager
+    ControlSystem --> SequenceScheduler
+    GUIWindow --> ControlSystem
+    SafetyInterlock ..> Command
+    DatabaseManager ..> Command

@@ -1,0 +1,55 @@
+
+classDiagram
+    class MasterController {
+        -str node_id
+        -list slaves
+        -ZeroMQContext ctx
+        +initialize() bool
+        +broadcast_command(cmd: dict) bool
+        +collect_health_status() dict
+        +failover() None
+    }
+    class SlaveController {
+        -str node_id
+        -str ip_address
+        -HardwareDriver driver
+        +heartbeat() bool
+        +execute_command(cmd: dict) dict
+        +report_status() dict
+        +hot_swap_detect() bool
+    }
+    class HardwareDriver {
+        -int module_id
+        +read_registers() dict
+        +write_registers(data: dict) bool
+        +self_test() bool
+    }
+    class WatchdogService {
+        -int timeout_sec
+        -MasterController master
+        -list slaves
+        +monitor() None
+        +trigger_recovery(node: str) bool
+        +log_fault(event: dict) None
+    }
+    class VirtualCorrelatorInterface {
+        -SecurityManager security
+        -MasterController master
+        +login(credentials: dict) str
+        +get_system_status() dict
+        +configure_correlator(config: dict) bool
+        +get_audit_logs() list
+    }
+    class SecurityManager {
+        -Database db
+        +authenticate(user: str, pass: str) bool
+        +authorize(role: str, resource: str) bool
+        +audit_log(action: str, user: str) None
+    }
+    MasterController --> SlaveController
+    MasterController --> WatchdogService
+    SlaveController --> HardwareDriver
+    VirtualCorrelatorInterface --> MasterController
+    VirtualCorrelatorInterface --> SecurityManager
+    WatchdogService --> MasterController
+    WatchdogService --> SlaveController

@@ -1,0 +1,39 @@
+
+sequenceDiagram
+    participant User
+    participant VCI as VirtualCorrelatorInterface
+    participant Sec as SecurityManager
+    participant Master as MasterController
+    participant Slave as SlaveController
+    participant HW as HardwareDriver
+    participant Watchdog as WatchdogService
+
+    Note over User, Watchdog: System Initialization
+    Master->>Master: initialize()
+    Slave->>Slave: heartbeat()
+    Master->>Slave: register_slave()
+    Watchdog->>Master: monitor()
+
+    Note over User, Watchdog: Configuration Flow
+    User->>VCI: login(credentials)
+    VCI->>Sec: authenticate()
+    Sec-->>VCI: token
+    User->>VCI: configure_correlator(config)
+    VCI->>Sec: authorize(role, resource)
+    Sec-->>VCI: allowed
+    VCI->>Master: broadcast_command(config)
+    Master->>Slave: execute_command(config)
+    Slave->>HW: write_registers(data)
+    HW-->>Slave: success
+    Slave-->>Master: status_report
+    Master-->>VCI: result
+    VCI-->>User: response
+    VCI->>Sec: audit_log(action, user)
+
+    Note over User, Watchdog: Fault Recovery Flow
+    Slave->>Watchdog: heartbeat_missed
+    Watchdog->>Watchdog: trigger_recovery(Slave)
+    Watchdog->>Slave: reboot_command()
+    Slave->>Slave: restart_service()
+    Slave->>Master: re_register()
+    Master->>VCI: status_update(FaultResolved)

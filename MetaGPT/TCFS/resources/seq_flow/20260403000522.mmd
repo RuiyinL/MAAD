@@ -1,0 +1,37 @@
+
+sequenceDiagram
+    participant ISR as Timer ISR
+    participant ST as SystemTimer
+    participant CE as ControlEngine
+    participant FM as FaultManager
+    participant CP as CommProtocol
+    participant HAL as HAL
+    participant PID as PIDController
+
+    Note over ISR,HAL: 32ms Interrupt Cycle
+    ISR->>ST: tick()
+    ST-->>ISR: return
+    
+    Note over ISR,HAL: 160ms Control Cycle (Every 5 ticks)
+    ISR->>ST: is_control_cycle()
+    ST-->>ISR: true
+    ISR->>CE: execute_cycle()
+    
+    CE->>FM: check_gyro_health()
+    FM-->>CE: status
+    alt Fault Detected
+        CE->>FM: is_system_safe()
+        FM-->>CE: false
+        CE->>CP: send_alarm()
+    else System Safe
+        CE->>CE: update_state_machine()
+        CE->>PID: calculate_error()
+        PID-->>CE: control_output
+        CE->>HAL: write_thrusters()
+        CE->>CP: send_telemetry()
+        CP->>HAL: uart_send()
+    end
+    
+    Note over ISR,HAL: Async Serial Interrupt
+    HAL->>CP: uart_recv()
+    CP->>CE: switch_mode()

@@ -1,0 +1,38 @@
+
+sequenceDiagram
+    participant U as User (Astronomer)
+    participant API as API Server
+    participant GCS as GeminiControlSystem
+    participant ACM as AccessManager
+    participant SCH as QueueScheduler
+    participant SAF as SafetyManager
+    participant SUB as Telescope/Instrument
+    participant DAQ as DataAcquisition
+    participant DB as Archive Storage
+
+    U->>API: Submit Observing Queue
+    API->>GCS: add_queue(queue_data)
+    GCS->>ACM: verify_access(user, Planning)
+    ACM-->>GCS: Access Granted
+    GCS->>SCH: add_block(blocks)
+    SCH-->>GCS: Queue Updated
+
+    Note over GCS,DAQ: Automated Execution Loop
+    GCS->>SCH: get_next_block()
+    SCH-->>GCS: ObservingBlock
+    GCS->>SAF: check_safety()
+    SAF-->>GCS: Safety OK
+    GCS->>SUB: move(target_coords)
+    SUB->>SUB: HardwareInterface.write()
+    SUB-->>GCS: Move Complete
+    GCS->>SUB: configure(exposure)
+    SUB-->>GCS: Config Ready
+    GCS->>DAQ: acquire_data(subsystem)
+    DAQ->>SUB: readout()
+    SUB-->>DAQ: RawData
+    DAQ->>DAQ: Convert to FITS
+    DAQ->>DB: archive_data(FITSData)
+    DB-->>DAQ: Storage Path
+    DAQ-->>GCS: Acquisition Complete
+    GCS->>API: Update Status
+    API-->>U: Notify Completion

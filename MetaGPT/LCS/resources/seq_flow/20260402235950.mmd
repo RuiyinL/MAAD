@@ -1,0 +1,37 @@
+
+sequenceDiagram
+    participant O as Operator
+    participant GUI as GUIWindow
+    participant SEC as Security
+    participant CORE as ControlSystem
+    participant LOCK as SafetyInterlock
+    participant HW as HardwareDriver
+    participant DB as DatabaseManager
+    
+    O->>GUI: login(user, pwd)
+    GUI->>SEC: authenticate(user, pwd)
+    SEC-->>GUI: return token/role
+    GUI->>CORE: start_polling()
+    loop Every 2 Seconds
+        CORE->>HW: read_status()
+        HW-->>CORE: return device_states
+        CORE->>GUI: update_display(device_states)
+    end
+    
+    O->>GUI: click_open_lane(lane_id)
+    GUI->>SEC: check_permission(role, OPEN)
+    SEC-->>GUI: return allowed
+    GUI->>CORE: execute_command(Command)
+    CORE->>LOCK: validate_command(Command, current_state)
+    alt Safety Check Failed
+        LOCK-->>CORE: return False (Conflict)
+        CORE->>DB: log_audit(FAILED, user, reason)
+        CORE-->>GUI: return Error
+    else Safety Check Passed
+        LOCK-->>CORE: return True
+        CORE->>HW: send_command(lane_id, OPEN)
+        HW-->>CORE: return Success
+        CORE->>DB: log_audit(SUCCESS, user, command)
+        CORE-->>GUI: return Success
+    end
+    GUI->>O: display_result()

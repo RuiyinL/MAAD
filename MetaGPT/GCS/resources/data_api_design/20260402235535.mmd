@@ -1,0 +1,75 @@
+
+classDiagram
+    class GeminiControlSystem {
+        -SafetyManager safety_mgr
+        -QueueScheduler scheduler
+        -Dict[str, BaseSubsystem] subsystems
+        -AccessManager access_mgr
+        +__init__()
+        +start() None
+        +shutdown() None
+        +execute_command(cmd: Command, user: User) bool
+    }
+    class SafetyManager {
+        -List[HardwareInterlock] interlocks
+        -SystemState current_state
+        +__init__()
+        +check_safety() bool
+        +trigger_safe_state() None
+        +get_status() SystemState
+    }
+    class QueueScheduler {
+        -List[ObservingBlock] queue
+        -ObservingBlock current_block
+        +__init__()
+        +add_block(block: ObservingBlock) None
+        +get_next_block() ObservingBlock
+        +execute_queue() None
+    }
+    class BaseSubsystem {
+        +__init__(name: str)
+        +initialize() bool
+        +move(target: dict) bool
+        +get_status() dict
+        +stop() None
+    }
+    class Telescope {
+        +move_to_coords(ra: float, dec: float) bool
+        +track() None
+    }
+    class Instrument {
+        +configure(filter: str, exposure: float) bool
+        +readout() FITSData
+    }
+    class DataAcquisition {
+        -FITSHandler fits_handler
+        +__init__()
+        +acquire_data(subsystem: Instrument) FITSData
+        +archive_data(data: FITSData) str
+    }
+    class AccessManager {
+        -Dict[UserRole, AccessLevel] permissions
+        +__init__()
+        +verify_access(user: User, mode: AccessMode) bool
+    }
+    class HardwareInterface {
+        <<interface>>
+        +connect() bool
+        +read() any
+        +write(value: any) bool
+    }
+    class Simulator {
+        +connect() bool
+        +read() any
+        +write(value: any) bool
+    }
+    GeminiControlSystem *-- SafetyManager
+    GeminiControlSystem *-- QueueScheduler
+    GeminiControlSystem *-- AccessManager
+    GeminiControlSystem o-- BaseSubsystem
+    Telescope --|> BaseSubsystem
+    Instrument --|> BaseSubsystem
+    BaseSubsystem o-- HardwareInterface
+    Simulator --|> HardwareInterface
+    DataAcquisition --> Instrument
+    SafetyManager --> HardwareInterface

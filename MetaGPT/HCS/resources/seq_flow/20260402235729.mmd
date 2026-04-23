@@ -1,0 +1,35 @@
+
+sequenceDiagram
+    participant U as User
+    participant API as FastAPI App
+    participant AUTH as UserService
+    participant DB as DatabaseManager
+    participant SIM as GatewaySimulator
+    participant SCH as ScheduleService
+    participant BAK as BackupManager
+    U->>API: POST /login (credentials)
+    API->>AUTH: authenticate(username, password)
+    AUTH-->>API: return JWT token
+    API-->>U: return token
+    U->>API: GET /dashboard (headers: JWT)
+    API->>AUTH: get_user_role(token)
+    AUTH-->>API: return role
+    API->>SIM: read_sensor(device_id)
+    SIM-->>API: return temp/humidity/status
+    API->>DB: query_data(history)
+    DB-->>API: return records
+    API-->>U: return dashboard data
+    U->>API: POST /schedule (job_config)
+    API->>SCH: add_job(job_id, cron, action)
+    SCH-->>API: confirm job
+    API-->>U: return success
+    loop Every 2 seconds
+        SIM->>SIM: simulate_environment()
+        SIM->>DB: save_data(sensor_readings)
+    end
+    U->>API: POST /backup (admin_token)
+    API->>BAK: create_backup()
+    BAK->>DB: backup_db(path)
+    DB-->>BAK: return file_path
+    BAK-->>API: return success
+    API-->>U: return backup status
