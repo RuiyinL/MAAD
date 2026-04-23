@@ -1,12 +1,12 @@
-# Replication for the Paper: *MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration*
+# Replication for the Paper: *Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory*
 
-This is the replication package for the paper: *MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration*. This repository contains an introduction of MAAD framework, source code for the implementations of each agent, the dataset of several requirements cases, and MAAD's generations based on one requirements case.
+This is the replication package for the paper: *Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory*. This repository contains an introduction to the MAAD framework, a dataset of 10 requirements cases, and MAAD's outputs under different experimental settings.
 
 ## 🚨 Introduction
 
-The MAAD framework implements a knowledge‑driven, multi‑agent pipeline that autonomously transforms a Software Requirements Specification (SRS) into a complete architecture design, MAAD comprises four specialized agents, and each individual agent is equipped with perception, reasoning, and action capabilities.
+The MAAD (Multi-Agent Architecture Design) framework implements a knowledge‑driven, iterative pipeline that autonomously transforms a Software Requirements Specification (SRS) into comprehensive, multi‑view architectural blueprints. Orchestrating four role‑specific agents, MAAD integrates Retrieval‑Augmented Generation (RAG) to inject authoritative architectural standards and employs a hierarchical memory mechanism (working, episodic, and semantic) to enable cross‑task knowledge reuse and iterative refinement.
 
-After receiving the SRS, the `Analyst agent` examines its content, identifies key aspects of the requirements, and distills them into four decomposed requirement artifacts. Once the `Modeler agent` perceives the generated artifacts in the artifacts pools from the Analyst agent, it constructs the system's multi‑view representation according to the "4+1" architecture view models proposed by Philippe Kruchten. When the `Designer agent` perceives the artifacts by the Analyst and Modeler agents, it synthesizes the final architecture documentation. The documentation formulates system goals and detailed design specifications. Finally, the `Evaluator agent` assesses the generated architecture by comparing the architecture views against the original SRSs. It produces an ATAM evaluation report and a Mismatch Analysis report, pinpointing any deviations or trade‑offs. Overall, the four agents enact a cohesive, feedback‑driven workflow. Through iterative communication and artifact exchange, MAAD ensures that each agent's autonomous activities cumulatively yield a robust, traceable architecture design.
+Upon receiving the SRS, the `Analyst agent` parses the specification and extracts three structured requirement artifacts: Functional Requirements (FRs), Non‑Functional Requirements (NFRs), and Architecturally Significant Requirements (ASRs). These are validated and stored in a shared artifact pool. The `Modeler agent` then retrieves relevant architectural patterns via RAG and transforms the validated requirements into executable multi‑view architectural models (following Kruchten’s “4+1” view model) in PlantUML syntax. Subsequently, the `Designer agent` integrates these models with requirement artifacts to synthesize production‑ready documentation, including interface contracts, deployment configurations, and end‑to‑end traceability mappings. Throughout this pipeline, the `Evaluator agent` operates iteratively at each stage to enforce quality checks, ensuring cross‑view consistency and requirement alignment before finalizing outputs. It concludes by generating an ATAM‑based assessment and a Mismatch Analysis report to highlight architectural trade‑offs and deviations. Collectively, the four agents enact a cohesive, feedback‑driven workflow. Through continuous artifact exchange, rule‑based validation, and memory‑driven refinement, MAAD ensures that automated generation culminates in a modular, traceable, and industry‑aligned architecture design.
 
 ![image](https://github.com/RuiyinL/MAAD/blob/main/img/Overview.png)
 
@@ -36,11 +36,11 @@ After receiving the SRS, the `Analyst agent` examines its content, identifies ke
 ## 📝 Citation
 
 ```bibtex
-@article{Li2025MAAD,
-  author = {Li, Ruiyin and Zhang, Yiran and Zhou, Xiyu and Liang, Peng and Sun, Weisong and Xuan, Jifeng and Jin, Zhi and Liu, Yang},
-  title = {{MAAD: Automate Software Architecture Design through Knowledge-Driven Multi-Agent Collaboration}},
+@article{Li2026MAAD,
+  author = {Li, Ruiyin and Zhang, Yiran and Zhou, Xiyu and Cai, Yangxiao and Liang, Peng and Sun, Weisong and Xuan, Jifeng and Jin, Zhi and Liu, Yang},
+  title = {{Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory}},
   journal={arXiv preprint arXiv:2507.21382},
-  year={2025}
+  year={2026}
 }
 ```
 
