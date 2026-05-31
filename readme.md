@@ -39,7 +39,7 @@ Upon receiving the SRS, the `Analyst agent` parses the specification and extract
 @article{Li2026MAAD,
   author = {Li, Ruiyin and Zhang, Yiran and Zhou, Xiyu and Cai, Yangxiao and Liang, Peng and Sun, Weisong and Xuan, Jifeng and Jin, Zhi and Liu, Yang},
   title = {{Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory}},
-  journal={arXiv preprint arXiv:2507.21382},
+  journal={arXiv preprint arXiv:xxxx.xxxxx},
   year={2026}
 }
 ```
