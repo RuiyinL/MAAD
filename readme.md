@@ -1,4 +1,17 @@
-# Replication for the Paper: *Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory*
+<div align="center">
+  <h1 align="center">Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory</h1>
+</div>
+
+
+<div align="center">
+    <a href="https://github.com/RuiyinL/MAAD/">
+        <img src="https://img.shields.io/badge/GitHub-000?logo=github&logoColor=FFE165&style=for-the-badge" alt="">
+    </a>
+    <a href="https://arxiv.org/abs/2606.01385">
+        <img src="https://img.shields.io/badge/Paper-000?logoColor=FFE165&logo=arxiv&style=for-the-badge" alt="">
+    </a>
+    <hr>
+</div>
 
 This is the replication package for the paper: *Bridging Requirements and Architecture: Multi-Agent Orchestration with External Knowledge and Hierarchical Memory*. This repository contains an introduction to the MAAD framework, a dataset of 10 requirements cases, and MAAD's outputs under different experimental settings.
 
